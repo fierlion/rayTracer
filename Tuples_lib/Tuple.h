@@ -17,7 +17,12 @@ protected:
     float w;
 
 public:
-    Tuple(){};
+    Tuple(){
+        x = 0.0;
+        y = 0.0;
+        z = 0.0;
+        w = 0.0;
+    };
     Tuple(float inX, float inY, float inZ, float inW) {
         x = inX;
         y = inY;
@@ -25,10 +30,10 @@ public:
         w = inW;
     }
 
-    int getX() const {return x;}
-    int getY() const {return y;}
-    int getZ() const {return z;}
-    int getW() const {return w;}
+    float getX() const {return x;}
+    float getY() const {return y;}
+    float getZ() const {return z;}
+    float getW() const {return w;}
 
     bool operator==(const Tuple& rhs);
     Tuple operator+(const Tuple& rhs);

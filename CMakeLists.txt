@@ -4,7 +4,9 @@ project(testing_test)
 set(CMAKE_CXX_STANDARD 14)
 
 set(SOURCE_FILES main.cpp)
-#add_executable(DateConverter_run ${SOURCE_FILES})
+set(HEADER_FILES Tuple.h Point.h Vector.h)
+
+add_executable(RayTracer_run ${SOURCE_FILES})
 
 include_directories(Tuples_lib)
 add_subdirectory(Tuples_lib)

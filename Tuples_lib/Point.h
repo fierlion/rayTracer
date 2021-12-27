@@ -20,7 +20,7 @@ public:
         w = POINT_FLOAT;
     }
 
-    Vector operator+(const Vector& rhs);
+    Point operator+(const Vector& rhs);
     Vector operator-(const Point& rhs);
     Point operator-(const Vector& rhs);
     Point operator-();

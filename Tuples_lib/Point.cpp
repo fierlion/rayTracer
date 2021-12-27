@@ -6,8 +6,8 @@
 #include "Vector.h"
 
 // Adding A Vector to a Point returns a Point
-Vector Point::operator+(const Vector& rhs) {
-    return Vector((x + rhs.getX()), (y + rhs.getY()), (z + rhs.getZ()));
+Point Point::operator+(const Vector& rhs) {
+    return Point((x + rhs.getX()), (y + rhs.getY()), (z + rhs.getZ()));
 }
 
 // Subtracting 2 Points returns a Vector
