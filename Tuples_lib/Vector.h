@@ -26,6 +26,11 @@ public:
     Vector operator-();
     Vector operator*(const float scalar);
     Vector operator/(const float scalar);
+
+    float magnitude();
+    Vector normalize();
+    float dotProduct(const Vector& rhs);
+    Vector crossProduct(const Vector&rhs);
 };
 
 #endif //TESTING_TEST_VECTOR_H

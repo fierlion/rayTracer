@@ -30,14 +30,15 @@ public:
     int getZ() const {return z;}
     int getW() const {return w;}
 
-    bool isPoint();
-    bool isVector();
     bool operator==(const Tuple& rhs);
     Tuple operator+(const Tuple& rhs);
     Tuple operator-(const Tuple& rhs);
     Tuple operator-();
     Tuple operator*(const float scalar);
     Tuple operator/(const float scalar);
+
+    bool isPoint();
+    bool isVector();
 };
 
 #endif //TESTING_TEST_TUPLE_H

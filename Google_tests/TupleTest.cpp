@@ -6,6 +6,7 @@
 #include "Tuple.h"
 #include "Point.h"
 #include "Vector.h"
+#include <math.h>
 
 TEST(TupleTestSuite, ExamplePointTuple){ // tuple(4.3, -4.2, 3.1, 1.0) is a point
     Tuple pointTuple(4.3, -4.2, 3.1, POINT_FLOAT);
@@ -148,5 +149,86 @@ TEST(TupleTestSuite, Negation){
     Tuple expectedTuple(-1.0, -1.0, -1.0, POINT_FLOAT);
 
     EXPECT_TRUE(-testPoint == expectedPoint);
+    EXPECT_TRUE(-testVector == expectedVector);
+    EXPECT_TRUE(-testTuple == expectedTuple);
 }
 
+TEST(TupleTestSuite, ScalarMultiplication){
+    Point testPoint(2.0, 2.0, 2.0);
+    Vector testVector(2.0, 2.0, 2.0);
+    Tuple testTuple(2.0, 2.0, 2.0, POINT_FLOAT);
+
+    Point expectedPoint(4.0, 4.0, 4.0);
+    Vector expectedVector(4.0, 4.0, 4.0);
+    Tuple expectedTuple(4.0, 4.0, 4.0, POINT_FLOAT);
+
+    float scalar = 2.0;
+
+    EXPECT_TRUE((testPoint * scalar) == expectedPoint);
+    EXPECT_TRUE((testVector * scalar) == expectedVector);
+    EXPECT_TRUE((testTuple * scalar) == expectedTuple);
+
+}
+
+TEST(TupleTestSuite, ScalarDivision){
+    Point testPoint(2.0, 2.0, 2.0);
+    Vector testVector(2.0, 2.0, 2.0);
+    Tuple testTuple(2.0, 2.0, 2.0, POINT_FLOAT);
+
+    Point expectedPoint(1.0, 1.0, 1.0);
+    Vector expectedVector(1.0, 1.0, 1.0);
+    Tuple expectedTuple(1.0, 1.0, 1.0, POINT_FLOAT);
+
+    float scalar = 2.0;
+
+    EXPECT_TRUE((testPoint / scalar) == expectedPoint);
+    EXPECT_TRUE((testVector / scalar) == expectedVector);
+    EXPECT_TRUE((testTuple / scalar) == expectedTuple);
+}
+
+TEST(TupleTestSuite, Magnitude) {
+    Vector testVectorA(1.0, 0.0, 0.0);
+    Vector testVectorB(0.0, 1.0, 0.0);
+    Vector testVectorC(0.0, 0.0, 1.0);
+    Vector testVectorD(1.0, 2.0, 3.0);
+    Vector testVectorE(-1.0, -2.0, -3.0);
+    float unitVectorMagnitude = 1.0;
+    float squareRootMagnitude = sqrt(14.0);
+
+    EXPECT_EQ(testVectorA.magnitude(), unitVectorMagnitude);
+    EXPECT_EQ(testVectorB.magnitude(), unitVectorMagnitude);
+    EXPECT_EQ(testVectorC.magnitude(), unitVectorMagnitude);
+    EXPECT_EQ(testVectorD.magnitude(), squareRootMagnitude);
+    EXPECT_EQ(testVectorE.magnitude(), squareRootMagnitude);
+}
+
+TEST(TupleTestSuite, Normalization) {
+    Vector testVectorA(4.0, 0.0, 0.0);
+    Vector testVectorB(1.0, 2.0, 3.0);
+    float unitVectorMagnitude = 1.0;
+    Vector expectedVectorA(1.0, 0.0, 0.0);
+    Vector expectedVectorB((1/sqrt(14)), (2/sqrt(14)), (3/sqrt(14)));
+
+    EXPECT_TRUE(testVectorA.normalize() == expectedVectorA);
+    EXPECT_TRUE(testVectorB.normalize() == expectedVectorB);
+
+    EXPECT_EQ(expectedVectorA.magnitude(), unitVectorMagnitude);
+    EXPECT_EQ(expectedVectorB.magnitude(), unitVectorMagnitude);
+}
+
+TEST(TupleTestSuite, DotProduct) {
+    Vector testVectorA(1.0, 2.0, 3.0);
+    Vector testVectorB(2.0, 3.0, 4.0);
+
+    EXPECT_EQ(testVectorA.dotProduct(testVectorB), 20.0);
+}
+
+TEST(TupleTestSuite, CrossProduct) {
+    Vector testVectorA(1.0, 2.0, 3.0);
+    Vector testVectorB(2.0, 3.0, 4.0);
+    Vector expectedVectorAB(-1.0, 2.0, -1.0);
+    Vector expectedVectorBA(1.0, -2.0, 1.0);
+
+    EXPECT_TRUE(testVectorA.crossProduct(testVectorB) == expectedVectorAB);
+    EXPECT_TRUE(testVectorB.crossProduct(testVectorA) == expectedVectorBA);
+}

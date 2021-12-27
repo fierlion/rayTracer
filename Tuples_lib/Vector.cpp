@@ -3,6 +3,7 @@
 //
 
 //#include "Point.h"
+#include <math.h>
 #include "Vector.h"
 
 // Adding a Point to a Vector to returns a Point
@@ -32,3 +33,21 @@ Vector Vector::operator/(const float scalar) {
     return Vector((x / scalar), (y / scalar), (z / scalar));
 }
 
+float Vector::magnitude() {
+    return sqrt((x*x)+(y*y)+(z*z));
+}
+
+Vector Vector::normalize() {
+    float thisMagnitude = magnitude();
+    return Vector((x/thisMagnitude), (y/thisMagnitude), (z/thisMagnitude));
+}
+
+float Vector::dotProduct(const Vector& rhs) {
+    return ((x * rhs.getX())+(y * rhs.getY()) + (z * rhs.getZ()));
+}
+
+Vector Vector::crossProduct(const Vector& rhs) {
+    return Vector((y * rhs.getZ()) - (z * rhs.getY()),
+                  (z * rhs.getX()) - (x * rhs.getZ()),
+                  (x * rhs.getY()) - (y * rhs.getX()));
+}
