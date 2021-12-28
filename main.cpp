@@ -1,6 +1,8 @@
 #include <iostream>
-#include "Point.h"
-#include "Vector.h"
+#include "Tuples_lib/Point.h"
+#include "Tuples_lib/Point.cpp"
+#include "Tuples_lib/Vector.h"
+#include "Tuples_lib/Vector.cpp"
 
 class Projectile {
 public:
