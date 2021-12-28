@@ -3,9 +3,9 @@
 //
 
 #include "gtest/gtest.h"
-#include "Tuple.h"
-#include "Point.h"
-#include "Vector.h"
+#include "../Tuples_lib/Tuple.h"
+#include "../Tuples_lib/Point.h"
+#include "../Tuples_lib/Vector.h"
 #include <math.h>
 
 TEST(TupleTestSuite, ExamplePointTuple){ // tuple(4.3, -4.2, 3.1, 1.0) is a point
