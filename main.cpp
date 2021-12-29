@@ -4,6 +4,8 @@
 #include "Tuples_lib/Point.cpp"
 #include "Tuples_lib/Vector.h"
 #include "Tuples_lib/Vector.cpp"
+#include "Tuples_lib/Color.h"
+#include "Tuples_lib/Color.cpp"
 #include "Canvas_lib/Canvas.h"
 #include "Canvas_lib/Canvas.cpp"
 
