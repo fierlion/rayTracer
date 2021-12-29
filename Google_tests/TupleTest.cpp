@@ -6,6 +6,7 @@
 #include "../Tuples_lib/Tuple.h"
 #include "../Tuples_lib/Point.h"
 #include "../Tuples_lib/Vector.h"
+#include "../Tuples_lib/Color.h"
 #include <math.h>
 
 TEST(TupleTestSuite, ExamplePointTuple){ // tuple(4.3, -4.2, 3.1, 1.0) is a point
@@ -94,6 +95,15 @@ TEST(TupleTestSuite, TupleAddition){
     EXPECT_TRUE(expectedTuple == static_cast<const Tuple>(resultVector));
 }
 
+TEST(TupleTestSuite, ColorAddition){
+    Color testColorA(2.0, 2.0, 2.0);
+    Color testColorB(1.0, 1.0, 1.0);
+    Color resultColor = testColorA + testColorB;
+    Color expectedColor(3.0, 3.0, 3.0);
+
+    EXPECT_TRUE(expectedColor == resultColor);
+}
+
 TEST(TupleTestSuite, TupleSubtraction){
     Tuple testTupleA(1.0, 1.0, 1.0, VECTOR_FLOAT);
     Tuple testTupleB(1.0, 1.0, 1.0, VECTOR_FLOAT);
@@ -105,6 +115,14 @@ TEST(TupleTestSuite, TupleSubtraction){
     EXPECT_TRUE(expectedTuple == static_cast<const Tuple>(resultVector));
 }
 
+TEST(TupleTestSuite, ColorSubtraction) {
+    Color testColorA(2.0, 2.0, 2.0);
+    Color testColorB(1.0, 1.0, 1.0);
+    Color resultColor = testColorA - testColorB;
+    Color expectedColor(1.0, 1.0, 1.0);
+
+    EXPECT_TRUE(expectedColor == resultColor);
+}
 
 TEST(TupleTestSuite, PointPointSubtraction){
     Point testPointA(1.0, 1.0, 1.0);
@@ -156,18 +174,20 @@ TEST(TupleTestSuite, Negation){
 TEST(TupleTestSuite, ScalarMultiplication){
     Point testPoint(2.0, 2.0, 2.0);
     Vector testVector(2.0, 2.0, 2.0);
+    Color testColor(2.0, 2.0, 2.0);
     Tuple testTuple(2.0, 2.0, 2.0, POINT_FLOAT);
 
     Point expectedPoint(4.0, 4.0, 4.0);
     Vector expectedVector(4.0, 4.0, 4.0);
+    Color expectedColor(4.0, 4.0, 4.0);
     Tuple expectedTuple(4.0, 4.0, 4.0, POINT_FLOAT);
 
     float scalar = 2.0;
 
     EXPECT_TRUE((testPoint * scalar) == expectedPoint);
     EXPECT_TRUE((testVector * scalar) == expectedVector);
+    EXPECT_TRUE((testColor * scalar) == expectedColor);
     EXPECT_TRUE((testTuple * scalar) == expectedTuple);
-
 }
 
 TEST(TupleTestSuite, ScalarDivision){
@@ -184,6 +204,16 @@ TEST(TupleTestSuite, ScalarDivision){
     EXPECT_TRUE((testPoint / scalar) == expectedPoint);
     EXPECT_TRUE((testVector / scalar) == expectedVector);
     EXPECT_TRUE((testTuple / scalar) == expectedTuple);
+}
+
+TEST(TupleTestSuite, ColorMultiplication) {
+    Color testColorA(1.0, 0.2, 0.4);
+    Color testColorB(0.9, 1.0, 0.1);
+    Color resultColor(testColorA * testColorB);
+    Color hadamardProductColor = testColorA.hadamardProduct(testColorB);
+    Color expectedColor(0.9, 0.2, 0.04);
+    EXPECT_TRUE(expectedColor == resultColor);
+    EXPECT_TRUE(expectedColor == hadamardProductColor);
 }
 
 TEST(TupleTestSuite, Magnitude) {
@@ -231,4 +261,12 @@ TEST(TupleTestSuite, CrossProduct) {
 
     EXPECT_TRUE(testVectorA.crossProduct(testVectorB) == expectedVectorAB);
     EXPECT_TRUE(testVectorB.crossProduct(testVectorA) == expectedVectorBA);
+}
+
+TEST(TupleTestSuite, ExampleColorTuple){ // tuple(4.3, -4.2, 3.1, 1.0) is a point
+    Color colorTuple(4.3, -4.2, 3.1);
+
+    EXPECT_TRUE(std::abs(colorTuple.getRed() - 4.3) < EPSILON);
+    EXPECT_TRUE(std::abs(colorTuple.getGreen() - -4.2) < EPSILON);
+    EXPECT_TRUE(std::abs(colorTuple.getBlue() - 3.1) < EPSILON);
 }

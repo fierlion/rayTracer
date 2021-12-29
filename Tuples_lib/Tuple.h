@@ -7,6 +7,7 @@
 
 #define VECTOR_FLOAT 0.0
 #define POINT_FLOAT 1.0
+#define COLOR_FLOAT -1.0
 #define EPSILON 0.00001
 
 class Tuple {
