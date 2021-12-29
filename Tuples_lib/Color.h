@@ -6,6 +6,7 @@
 #define RAYTRACER_COLOR_H
 
 #include "Tuple.h"
+#include <iostream>
 
 class Color : public Tuple {
 public:
@@ -29,7 +30,7 @@ public:
     Color operator*(const Color& rhs);
 
     Color hadamardProduct(const Color& rhs);
-
+    std::string toScaledString();
 };
 
 
