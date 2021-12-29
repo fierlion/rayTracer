@@ -37,7 +37,7 @@ Projectile tick(Environment env, Projectile proj) {
 int main()
 {
     // projectile starts at a unit above origin
-    Vector normalizedStart = Vector(1.0, 1.0, 0.0).normalize();
+    Vector normalizedStart = Vector(1.0, 1.8, 0.0).normalize() * 11.25;
     Projectile mainProjectile = Projectile(Point(0.0, 1.0, 0.0), normalizedStart);
     Environment mainEnvironment = Environment(Vector(0.0, -0.1, 0.0), Vector(-0.01, 0.0, 0.0));
     Canvas mainCanvas = Canvas(900, 550);
