@@ -23,7 +23,7 @@ Color Color::operator*(const Color& rhs) {
     return Color((x * rhs.getRed()), (y * rhs.getGreen()), (z * rhs.getBlue()));
 }
 
-// this could also be an alias to Color Color::operator*(const Color& rhs)
+// this could also be an alias to the unary * operator, `Color::operator*(const Color& rhs)`
 Color Color::hadamardProduct(const Color &rhs) {
     return Color((x * rhs.getRed()), (y * rhs.getGreen()), (z * rhs.getBlue()));
 }

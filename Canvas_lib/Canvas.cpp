@@ -3,7 +3,6 @@
 //
 
 #include "Canvas.h"
-#include <cmath>
 #include <iostream>
 #include <numeric>
 
@@ -35,4 +34,11 @@ std::string Canvas::canvasToPpm() {
         }
     }
     return ppmString.replace(ppmString.end()-1, ppmString.end(), "\n");
+}
+
+void Canvas::setLocationColor(unsigned int x, unsigned int y, Color colorIn) {
+    // TODO throw exception when x/y are outside the canvas range
+    if ((x < width && y < height) && (x >= 0 && y >= 0)) {
+        canvas[y][x] = colorIn;
+    }
 }

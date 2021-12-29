@@ -41,6 +41,15 @@ TEST(CanvasTestSuite, ToEmptyPPMFileString) {
     EXPECT_EQ(expectedEmptyResult, emptyResult);
 }
 
+TEST(CanvasTestSuite, TinyPPMFileString) {
+    Canvas tinyCanvas(1,1);
+    Color red(1.0, 0.0, 0.0);
+    tinyCanvas.setLocationColor(0,0, red);
+    std::string canvasResult = tinyCanvas.canvasToPpm();
+    std::string expectedCanvasResult = "P3\n1 1\n255\n255 0 0\n";
+    EXPECT_EQ(expectedCanvasResult, canvasResult);
+}
+
 TEST(CanvasTestSuite, ToPPMFileString) {
     Canvas testCanvas(2, 2);
     Color red(1.0, 0.0, 0.0);

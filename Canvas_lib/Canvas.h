@@ -26,7 +26,7 @@ public:
     unsigned int getWidth() {return width;}
     Color getLocationColor(unsigned int x, unsigned int y) {return canvas[x][y];}
     // Color location is zero-based from the top down
-    void setLocationColor(unsigned int x, unsigned int y, Color colorIn) {canvas[x][y] = colorIn;}
+    void setLocationColor(unsigned int x, unsigned int y, Color colorIn);
     std::string canvasToPpm();
 private:
     std::vector<std::vector<Color> > canvas;
