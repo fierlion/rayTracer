@@ -26,4 +26,58 @@ TEST(MatrixTestSuite, FourByFourTestMatrix){
     EXPECT_TRUE(testMatrix.getPosition(2,2) - 11.0 < EPSILON);
     EXPECT_TRUE(testMatrix.getPosition(3,0) - 13.5 < EPSILON);
     EXPECT_TRUE(testMatrix.getPosition(3,2) - 15.5 < EPSILON);
+    testMatrix.displayMatrixContents();
+}
+
+TEST(MatrixTestSuite, ThreeByThreeTestMatrix){
+    std::array<float, 9> matrixIn = {-3.0, 5.0, 0.0,
+                                     1.0, -2.0, -7.0,
+                                     0.0, 1.0, 1.0};
+
+    Matrix3 testMatrix(matrixIn);
+    EXPECT_TRUE(std::abs(testMatrix.getPosition(0,0) - -3.0) < EPSILON);
+    EXPECT_TRUE(std::abs(testMatrix.getPosition(1,1) - -2.0) < EPSILON);
+    EXPECT_TRUE(testMatrix.getPosition(2,2) - 1.0 < EPSILON);
+}
+
+TEST(MatrixTestSuite, TwoByTwoTestMatrix) {
+    std::array<float, 4> matrixIn = {-3.0, 5.0, 1.0, -2.0};
+    Matrix2 testMatrix(matrixIn);
+    EXPECT_TRUE(std::abs(testMatrix.getPosition(0,0) - -3.0) < EPSILON);
+    EXPECT_TRUE(testMatrix.getPosition(0,1) - 5.0 < EPSILON);
+    EXPECT_TRUE(testMatrix.getPosition(1,0) - 1.0 < EPSILON);
+    EXPECT_TRUE(std::abs(testMatrix.getPosition(1,1) - -2.0) < EPSILON);
+}
+
+TEST(MatrixTestSuite, MatrixEquality) {
+    std::array<float, 4> matrixIn = {-3.0, 5.0, 1.0, -2.0};
+    std::array<float, 4> matrixInNotEqual = {-4.0, 5.0, 1.0, -2.0};
+    Matrix2 testMatrixA(matrixIn);
+    Matrix2 testMatrixB(matrixIn);
+    Matrix2 testMatrixC(matrixInNotEqual);
+    EXPECT_TRUE(testMatrixA == testMatrixB);
+    EXPECT_FALSE(testMatrixA == testMatrixC);
+    EXPECT_TRUE(testMatrixA != testMatrixC);
+    EXPECT_FALSE(testMatrixA != testMatrixB);
+}
+
+TEST(MatrixTestSuite, MatrixMultiplication) {
+    std::array<float, 16> matrixInA = {1.0, 2.0, 3.0, 4.0,
+                                      5.0, 6.0, 7.0, 8.0,
+                                      9.0, 8.0, 7.0, 6.0,
+                                      5.0, 4.0, 3.0, 2.0};
+
+    std::array<float, 16> matrixInB = {-2.0, 1.0, 2.0, 3.0,
+                                      3.0, 2.0, 1.0, -1.0,
+                                      4.0, 3.0, 6.0, 5.0,
+                                      1.0, 2.0, 7.0, 8.0};
+    std::array<float, 16> expectedResult = {20.0, 22.0, 50.0, 48.0,
+                                       44.0, 54.0, 114.0, 108.0,
+                                       40.0, 58.0, 110.0, 102.0,
+                                       16.0, 26.0, 46.0, 42.0};
+    Matrix testMatrixA(matrixInA);
+    Matrix testMatrixB(matrixInB);
+    Matrix expectedMatrix(expectedResult);
+    Matrix resultMatrix = testMatrixA * testMatrixB;
+    EXPECT_TRUE(expectedMatrix == resultMatrix);
 }

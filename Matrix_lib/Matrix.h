@@ -27,6 +27,10 @@ public:
 
     int getDimension() {return dimension;}
     float getPosition(unsigned int x, unsigned int y);
+    void displayMatrixContents();
+    bool operator==(const Matrix& rhs);
+    bool operator!=(const Matrix& rhs);
+    Matrix operator*(const Matrix& rhs);
 protected:
     std::array<std::array<float, 4>, 4> matrix;
 

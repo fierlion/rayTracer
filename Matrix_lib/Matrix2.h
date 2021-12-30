@@ -11,8 +11,13 @@ public:
     Matrix2() {
         dimension = 2;
     };
-    Matrix2(float matrixIn[4]) {
+    Matrix2(std::array<float, 4> matrixIn) {
         dimension = 2;
+        for (unsigned int r = 0; r < dimension; r++) {
+            for (unsigned int c = 0; c < dimension; c++) {
+                matrix[c][r] = matrixIn[(dimension * c) + r];
+            }
+        }
     };
 };
 
