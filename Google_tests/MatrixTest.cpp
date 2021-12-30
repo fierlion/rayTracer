@@ -155,3 +155,49 @@ TEST(MatrixTestSuite, SubmatrixFourThreeTwo) {
     Matrix expectedMatrixTwo = Matrix(matrixTwoOut);
     EXPECT_TRUE(expectedMatrixTwo == resultMatrixTwo);
 }
+
+TEST(MatrixTestSuite, ThreeByThreeMinor) {
+    std::array<float, 9> matrixThreeIn = {3.0, 5.0, 0.0,
+                                          2.0, -1.0, -7.0,
+                                          6.0, -1.0, 5.0};
+    Matrix matrixThree(matrixThreeIn);
+    Matrix subMatrixTwo = matrixThree.subMatrix2(1, 0);
+    EXPECT_TRUE(std::abs(subMatrixTwo.determinant() - 25) < EPSILON);
+    // .minor() combines subMatrix and determinant
+    EXPECT_TRUE(std::abs(matrixThree.minor3(1, 0) - 25) < EPSILON);
+}
+
+TEST(MatrixTestSuite, ThreeByThreeCoFactor) {
+    std::array<float, 9> matrixThreeIn = {3.0, 5.0, 0.0,
+                                          2.0, -1.0, -7.0,
+                                          6.0, -1.0, 5.0};
+    Matrix matrixThree(matrixThreeIn);
+    EXPECT_TRUE(std::abs(matrixThree.minor3(0, 0) - -12) < EPSILON);
+    EXPECT_TRUE(std::abs(matrixThree.coFactor3(0, 0) - -12) < EPSILON);
+    EXPECT_TRUE(std::abs(matrixThree.minor3(1, 0) - 25) < EPSILON);
+    EXPECT_TRUE(std::abs(matrixThree.coFactor3(1, 0) - -25) < EPSILON);
+}
+
+TEST(MatrixTestSuite, ThreeByThreeDeterminant) {
+    std::array<float, 9> matrixThreeIn = {1.0, 2.0, 6.0,
+                                          -5.0, 8.0, -4.0,
+                                          2.0, 6.0, 4.0};
+    Matrix matrixThree(matrixThreeIn);
+    EXPECT_TRUE(std::abs(matrixThree.coFactor3(0, 0) - 56) < EPSILON);
+    EXPECT_TRUE(std::abs(matrixThree.coFactor3(0, 1) - 12) < EPSILON);
+    EXPECT_TRUE(std::abs(matrixThree.coFactor3(0, 2) - -46) < EPSILON);
+    EXPECT_TRUE(std::abs(matrixThree.determinant() - -196) < EPSILON);
+}
+
+TEST(MatrixTestSuite, FourByFourDeterminant) {
+    std::array<float, 16> matrixFourIn = {-2.0, -8.0, 3.0, 5.0,
+                                          -3.0, 1.0, 7.0, 3.0,
+                                          1.0, 2.0, -9.0, 6.0,
+                                          -6.0, 7.0, 7.0, -9.0};
+    Matrix matrixFour(matrixFourIn);
+    EXPECT_TRUE(std::abs(matrixFour.coFactor4(0, 0) - 690) < EPSILON);
+    EXPECT_TRUE(std::abs(matrixFour.coFactor4(0, 1) - 447) < EPSILON);
+    EXPECT_TRUE(std::abs(matrixFour.coFactor4(0, 2) - 210) < EPSILON);
+    EXPECT_TRUE(std::abs(matrixFour.coFactor4(0, 3) - 51) < EPSILON);
+    EXPECT_TRUE(std::abs(matrixFour.determinant() - -4071) < EPSILON);
+}

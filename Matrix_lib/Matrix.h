@@ -55,7 +55,11 @@ public:
     static Matrix identityMatrix();
     Matrix transpose();
     Matrix subMatrix3(unsigned int row, unsigned int col);
+    float minor4(unsigned int row, unsigned int col);
+    float coFactor4(unsigned int row, unsigned int col);
     Matrix subMatrix2(unsigned int row, unsigned int col);
+    float minor3(unsigned int row, unsigned int col);
+    float coFactor3(unsigned int row, unsigned int col);
 };
 
 

@@ -37,22 +37,10 @@ bool Matrix::operator==(const Matrix& rhs) {
     return isEqual;
 }
 
-// TODO figure out how to invert `bool Matrix::operator==(const Matrix& rhs)`
 bool Matrix::operator!=(const Matrix& rhs) {
-    bool isEqual = true;
-    for(unsigned int h = 0; h < dimension; h++) {
-        for (unsigned int w = 0; w < dimension; w++) {
-            if (std::abs(matrix[h][w] - rhs.matrix[h][w]) < EPSILON) {
-                continue;
-            } else {
-                isEqual = false;
-            }
-        }
-    }
-    return !(isEqual);
+    return !this->operator==(rhs);
 }
 
-// TODO figure out how to make this work for all dimensions
 Matrix Matrix::operator*(const Matrix& rhs) {
     std::array<float, 16> resultArray;
     for(unsigned int r = 0; r < dimension; r++) {
@@ -98,12 +86,6 @@ Matrix Matrix::transpose() {
     return Matrix(resultArray);
 }
 
-float Matrix::determinant() {
-    if (dimension == 2) {
-        return (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
-    }
-    // TODO else throw exception
-}
 
 Matrix Matrix::subMatrix3(unsigned int row, unsigned int col) {
     std::array<float, 9> resultArray;
@@ -119,6 +101,19 @@ Matrix Matrix::subMatrix3(unsigned int row, unsigned int col) {
     return Matrix(resultArray);
 }
 
+float Matrix::minor4(unsigned int row, unsigned int col) {
+    return this->subMatrix3(row, col).determinant();
+}
+
+float Matrix::coFactor4(unsigned int row, unsigned int col) {
+    float minor = this->minor4(row, col);
+    if(((row + col) & 1) == 0) {
+        return minor;
+    } else {
+        return minor * -1;
+    }
+}
+
 Matrix Matrix::subMatrix2(unsigned int row, unsigned int col) {
     std::array<float, 4> resultArray;
     unsigned int current = 0;
@@ -131,4 +126,37 @@ Matrix Matrix::subMatrix2(unsigned int row, unsigned int col) {
         }
     }
     return Matrix(resultArray);
+}
+
+float Matrix::minor3(unsigned int row, unsigned int col) {
+    return this->subMatrix2(row, col).determinant();
+}
+
+float Matrix::coFactor3(unsigned int row, unsigned int col) {
+    float minor = this->minor3(row, col);
+    if(((row + col) & 1) == 0) {
+        return minor;
+    } else {
+        return minor * -1;
+    }
+}
+
+float Matrix::determinant() {
+    // todo throw exception for out of range dimension
+    // todo ew gross need to fix this.
+    if (dimension == 2) {
+        return (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
+    } else if (dimension == 3) {
+        float result = 0.0;
+        for (unsigned int i = 0; i < dimension; i++) {
+            result += matrix[0][i] * this->coFactor3(0, i);
+        }
+        return result;
+    } else if (dimension == 4) {
+        float result = 0.0;
+        for (unsigned int i = 0; i < dimension; i++) {
+            result += matrix[0][i] * this->coFactor4(0, i);
+        }
+        return result;
+    }
 }
