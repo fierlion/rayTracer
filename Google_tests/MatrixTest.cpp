@@ -26,7 +26,6 @@ TEST(MatrixTestSuite, FourByFourTestMatrix){
     EXPECT_TRUE(testMatrix.getPosition(2,2) - 11.0 < EPSILON);
     EXPECT_TRUE(testMatrix.getPosition(3,0) - 13.5 < EPSILON);
     EXPECT_TRUE(testMatrix.getPosition(3,2) - 15.5 < EPSILON);
-    testMatrix.displayMatrixContents();
 }
 
 TEST(MatrixTestSuite, ThreeByThreeTestMatrix){
@@ -79,5 +78,49 @@ TEST(MatrixTestSuite, MatrixMultiplication) {
     Matrix testMatrixB(matrixInB);
     Matrix expectedMatrix(expectedResult);
     Matrix resultMatrix = testMatrixA * testMatrixB;
+    EXPECT_TRUE(expectedMatrix == resultMatrix);
+}
+
+TEST(MatrixTestSuite, MatrixTupleMultiplication) {
+    std::array<float, 16> matrixIn = {1.0, 2.0, 3.0, 4.0,
+                                       2.0, 4.0, 4.0, 2.0,
+                                       8.0, 6.0, 4.0, 1.0,
+                                       0.0, 0.0, 0.0, 1.0};
+    Matrix testMatrix(matrixIn);
+    Tuple testTuple(1.0, 2.0, 3.0, 1.0);
+    Tuple resultTuple = testMatrix * testTuple;
+    Tuple expectedTuple(18.0, 24.0, 33.0, 1.0);
+    EXPECT_TRUE(expectedTuple == resultTuple);
+}
+
+TEST(MatrixTestSuite, IdentityMatrix) {
+    std::array<float, 16> identityMatrixIn = {1.0, 0.0, 0.0, 0.0,
+                                      0.0, 1.0, 0.0, 0.0,
+                                      0.0, 0.0, 1.0, 0.0,
+                                      0.0, 0.0, 0.0, 1.0};
+    std::array<float, 16> matrixIn = {1.0, 2.0, 3.0, 4.0,
+                                      2.0, 4.0, 4.0, 2.0,
+                                      8.0, 6.0, 4.0, 1.0,
+                                      0.0, 0.0, 0.0, 1.0};
+    Matrix expectedIdentityMatrix(identityMatrixIn);
+    Matrix testMatrix(matrixIn);
+    Matrix resultIdentityMatrix = Matrix::identityMatrix();
+    EXPECT_TRUE(expectedIdentityMatrix == resultIdentityMatrix);
+    Matrix resultMatrix = testMatrix * Matrix::identityMatrix();
+    EXPECT_TRUE(testMatrix == resultMatrix);
+}
+
+TEST(MatrixTestSuite, MatrixTranspose) {
+    std::array<float, 16> matrixIn = {0.0, 9.0, 3.0, 0.0,
+                                      9.0, 8.0, 0.0, 8.0,
+                                      1.0, 8.0, 5.0, 3.0,
+                                      0.0, 0.0, 5.0, 8.0};
+    std::array<float, 16> matrixTransposeIn = {0.0, 9.0, 1.0, 0.0,
+                                               9.0, 8.0, 8.0, 0.0,
+                                               3.0, 0.0, 5.0, 5.0,
+                                               0.0, 8.0, 3.0, 8.0};
+    Matrix testMatrix(matrixIn);
+    Matrix resultMatrix = testMatrix.transpose();
+    Matrix expectedMatrix(matrixTransposeIn);
     EXPECT_TRUE(expectedMatrix == resultMatrix);
 }

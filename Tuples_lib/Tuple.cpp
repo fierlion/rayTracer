@@ -68,3 +68,10 @@ Tuple Tuple::operator/(const float scalar) {
 
 bool Tuple::isVector() {return std::abs(w - VECTOR_FLOAT) < EPSILON;}
 bool Tuple::isPoint() {return std::abs(w - POINT_FLOAT) < EPSILON;}
+
+std::string Tuple::toString() {
+    return std::string("x: " + std::to_string(x) + " " +
+                       "y: " + std::to_string(y) + " " +
+                       "z: " + std::to_string(z) + " " +
+                       "w: " + std::to_string(w));
+}

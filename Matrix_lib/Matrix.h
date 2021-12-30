@@ -8,6 +8,7 @@
 #define EPSILON 0.00001
 
 #include <array>
+#include "../Tuples_lib/Tuple.h"
 
 class Matrix {
 public:
@@ -16,7 +17,6 @@ public:
         dimension = 4;
     };
     Matrix(std::array<float, 16> matrixIn) {
-        // assign to matrix
         dimension = 4;
         for (unsigned int r = 0; r < dimension; r++) {
             for (unsigned int c = 0; c < dimension; c++) {
@@ -31,10 +31,11 @@ public:
     bool operator==(const Matrix& rhs);
     bool operator!=(const Matrix& rhs);
     Matrix operator*(const Matrix& rhs);
+    Tuple operator*(const Tuple& rhs);
+    static Matrix identityMatrix();
+    Matrix transpose();
 protected:
     std::array<std::array<float, 4>, 4> matrix;
-
-    //float matrix[4][4];
     unsigned int dimension;
 };
 

@@ -10,6 +10,8 @@
 #define COLOR_FLOAT -1.0
 #define EPSILON 0.00001
 
+#include <iostream>
+
 class Tuple {
 protected:
     float x;
@@ -45,6 +47,7 @@ public:
 
     bool isPoint();
     bool isVector();
+    std::string toString();
 };
 
 #endif //TESTING_TEST_TUPLE_H
