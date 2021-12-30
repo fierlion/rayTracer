@@ -4,8 +4,6 @@
 
 #include "gtest/gtest.h"
 #include "../Matrix_lib/Matrix.h"
-#include "../Matrix_lib/Matrix2.h"
-#include "../Matrix_lib/Matrix3.h"
 #include <array>
 
 TEST(MatrixTestSuite, EmptyFourByFourTestMatrix){
@@ -33,7 +31,7 @@ TEST(MatrixTestSuite, ThreeByThreeTestMatrix){
                                      1.0, -2.0, -7.0,
                                      0.0, 1.0, 1.0};
 
-    Matrix3 testMatrix(matrixIn);
+    Matrix testMatrix(matrixIn);
     EXPECT_TRUE(std::abs(testMatrix.getPosition(0,0) - -3.0) < EPSILON);
     EXPECT_TRUE(std::abs(testMatrix.getPosition(1,1) - -2.0) < EPSILON);
     EXPECT_TRUE(testMatrix.getPosition(2,2) - 1.0 < EPSILON);
@@ -41,7 +39,7 @@ TEST(MatrixTestSuite, ThreeByThreeTestMatrix){
 
 TEST(MatrixTestSuite, TwoByTwoTestMatrix) {
     std::array<float, 4> matrixIn = {-3.0, 5.0, 1.0, -2.0};
-    Matrix2 testMatrix(matrixIn);
+    Matrix testMatrix(matrixIn);
     EXPECT_TRUE(std::abs(testMatrix.getPosition(0,0) - -3.0) < EPSILON);
     EXPECT_TRUE(testMatrix.getPosition(0,1) - 5.0 < EPSILON);
     EXPECT_TRUE(testMatrix.getPosition(1,0) - 1.0 < EPSILON);
@@ -51,9 +49,9 @@ TEST(MatrixTestSuite, TwoByTwoTestMatrix) {
 TEST(MatrixTestSuite, MatrixEquality) {
     std::array<float, 4> matrixIn = {-3.0, 5.0, 1.0, -2.0};
     std::array<float, 4> matrixInNotEqual = {-4.0, 5.0, 1.0, -2.0};
-    Matrix2 testMatrixA(matrixIn);
-    Matrix2 testMatrixB(matrixIn);
-    Matrix2 testMatrixC(matrixInNotEqual);
+    Matrix testMatrixA(matrixIn);
+    Matrix testMatrixB(matrixIn);
+    Matrix testMatrixC(matrixInNotEqual);
     EXPECT_TRUE(testMatrixA == testMatrixB);
     EXPECT_FALSE(testMatrixA == testMatrixC);
     EXPECT_TRUE(testMatrixA != testMatrixC);
@@ -127,6 +125,33 @@ TEST(MatrixTestSuite, MatrixTranspose) {
 
 TEST(MatrixTestSuite, DeterminantMatrixTwo) {
     std::array<float, 4> matrixIn = {1.0, 5.0, -3.0, 2.0};
-    Matrix2 testMatrix(matrixIn);
+    Matrix testMatrix(matrixIn);
     EXPECT_TRUE(testMatrix.determinant() - 17.0 < EPSILON);
+}
+
+TEST(MatrixTestSuite, SubmatrixFourThreeTwo) {
+    std::array<float, 16> matrixFourIn = {-6.0, 1.0, 1.0, 6.0,
+                                          -8.0, 5.0, 8.0, 6.0,
+                                          -1.0, 0.0, 8.0, 2.0,
+                                          -7.0, 1.0, -1.0, 1.0};
+
+    std::array<float, 9> matrixThreeOut = {-6.0, 1.0, 6.0,
+                                           -8.0, 8.0, 6.0,
+                                           -7.0, -1.0, 1.0};
+
+    std::array<float, 9> matrixThreeIn = {1.0, 5.0, 0.0,
+                                          -3.0, 2.0, 7.0,
+                                          0.0, 6.0, -3.0};
+
+    std::array<float, 4> matrixTwoOut = {-3.0, 2.0, 0.0, 6.0};
+
+    Matrix matrixFour = Matrix(matrixFourIn);
+    Matrix resultMatrixThree = matrixFour.subMatrix3(2, 1);
+    Matrix expectedMatrixThree = Matrix(matrixThreeOut);
+    EXPECT_TRUE(expectedMatrixThree == resultMatrixThree);
+
+    Matrix matrixThree = Matrix(matrixThreeIn);
+    Matrix resultMatrixTwo = matrixThree.subMatrix2(0, 2);
+    Matrix expectedMatrixTwo = Matrix(matrixTwoOut);
+    EXPECT_TRUE(expectedMatrixTwo == resultMatrixTwo);
 }

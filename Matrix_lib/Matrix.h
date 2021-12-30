@@ -11,6 +11,9 @@
 #include "../Tuples_lib/Tuple.h"
 
 class Matrix {
+protected:
+    std::array<std::array<float, 4>, 4> matrix;
+    unsigned int dimension;
 public:
     Matrix(){
         // default to 4x4 matrix
@@ -18,6 +21,22 @@ public:
     };
     Matrix(std::array<float, 16> matrixIn) {
         dimension = 4;
+        for (unsigned int r = 0; r < dimension; r++) {
+            for (unsigned int c = 0; c < dimension; c++) {
+                matrix[c][r] = matrixIn[(dimension * c) + r];
+            }
+        }
+    };
+    Matrix(std::array<float, 9> matrixIn) {
+        dimension = 3;
+        for (unsigned int r = 0; r < dimension; r++) {
+            for (unsigned int c = 0; c < dimension; c++) {
+                matrix[c][r] = matrixIn[(dimension * c) + r];
+            }
+        }
+    };
+    Matrix(std::array<float, 4> matrixIn) {
+        dimension = 2;
         for (unsigned int r = 0; r < dimension; r++) {
             for (unsigned int c = 0; c < dimension; c++) {
                 matrix[c][r] = matrixIn[(dimension * c) + r];
@@ -32,11 +51,11 @@ public:
     bool operator!=(const Matrix& rhs);
     Matrix operator*(const Matrix& rhs);
     Tuple operator*(const Tuple& rhs);
+    float determinant();
     static Matrix identityMatrix();
     Matrix transpose();
-protected:
-    std::array<std::array<float, 4>, 4> matrix;
-    unsigned int dimension;
+    Matrix subMatrix3(unsigned int row, unsigned int col);
+    Matrix subMatrix2(unsigned int row, unsigned int col);
 };
 
 

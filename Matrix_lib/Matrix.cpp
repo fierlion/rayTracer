@@ -97,3 +97,38 @@ Matrix Matrix::transpose() {
     }
     return Matrix(resultArray);
 }
+
+float Matrix::determinant() {
+    if (dimension == 2) {
+        return (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
+    }
+    // TODO else throw exception
+}
+
+Matrix Matrix::subMatrix3(unsigned int row, unsigned int col) {
+    std::array<float, 9> resultArray;
+    unsigned int current = 0;
+    for(unsigned int r = 0; r < dimension; r++) {
+        for (unsigned int c = 0; c < dimension; c++) {
+            if ((r != row) && (c != col)) {
+                resultArray[current] = matrix[r][c];
+                current += 1;
+            }
+        }
+    }
+    return Matrix(resultArray);
+}
+
+Matrix Matrix::subMatrix2(unsigned int row, unsigned int col) {
+    std::array<float, 4> resultArray;
+    unsigned int current = 0;
+    for(unsigned int r = 0; r < dimension; r++) {
+        for (unsigned int c = 0; c < dimension; c++) {
+            if ((r != row) && (c != col)) {
+                resultArray[current] = matrix[r][c];
+                current += 1;
+            }
+        }
+    }
+    return Matrix(resultArray);
+}
