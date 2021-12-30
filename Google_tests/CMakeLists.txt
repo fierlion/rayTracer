@@ -13,8 +13,8 @@ set(SOURCE_FILES ../Canvas_lib/Canvas.cpp)
 
 add_library(Canvas_lib STATIC ${SOURCE_FILES} ${HEADER_FILES})
 
-set(HEADER_FILES ../Matrix_lib/Matrix.h)
-set(SOURCE_FILES ../Matrix_lib/Matrix.cpp)
+set(HEADER_FILES ../Matrix_lib/Matrix.h ../Matrix_lib/Matrix2.h ../Matrix_lib/Matrix3.h)
+set(SOURCE_FILES ../Matrix_lib/Matrix.cpp ../Matrix_lib/Matrix2.cpp ../Matrix_lib/Matrix3.cpp)
 
 add_library(Matrix_lib STATIC ${SOURCE_FILES} ${HEADER_FILES})
 

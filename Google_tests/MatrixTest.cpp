@@ -124,3 +124,9 @@ TEST(MatrixTestSuite, MatrixTranspose) {
     Matrix expectedMatrix(matrixTransposeIn);
     EXPECT_TRUE(expectedMatrix == resultMatrix);
 }
+
+TEST(MatrixTestSuite, DeterminantMatrixTwo) {
+    std::array<float, 4> matrixIn = {1.0, 5.0, -3.0, 2.0};
+    Matrix2 testMatrix(matrixIn);
+    EXPECT_TRUE(testMatrix.determinant() - 17.0 < EPSILON);
+}

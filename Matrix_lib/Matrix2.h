@@ -19,7 +19,7 @@ public:
             }
         }
     };
+    float determinant();
 };
-
 
 #endif //RAYTRACER_MATRIX2_H
