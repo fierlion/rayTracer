@@ -160,3 +160,36 @@ float Matrix::determinant() {
         return result;
     }
 }
+
+bool Matrix::isInvertible() {
+    float thisDeterminant = this->determinant();
+    if (std::abs(thisDeterminant - 0.0) < EPSILON){
+        return false;
+    } else {
+        return true;
+    }
+}
+
+Matrix Matrix::inverse() {
+    if (this->isInvertible()) {
+        std::array<float, 16> coFactorArray;
+        std::array<float, 16> resultArray;
+        for(unsigned int r = 0; r < dimension; r++) {
+            for (unsigned int c = 0; c < dimension; c++) {
+                coFactorArray[(dimension * r) + c] = this->coFactor4(r, c);
+            }
+        }
+        Matrix intermediate = Matrix(coFactorArray);
+        Matrix transposed = intermediate.transpose();
+
+        float originalDeterminant = this->determinant();
+        for(unsigned int r = 0; r < dimension; r++) {
+            for (unsigned int c = 0; c < dimension; c++) {
+                resultArray[(dimension * r) + c] = transposed.getPosition(r, c)/originalDeterminant;
+            }
+        }
+        return Matrix(resultArray);
+    } else {
+        std::cout << "TODO: throw non-invertible Matrix exception" << std::endl;
+    }
+}

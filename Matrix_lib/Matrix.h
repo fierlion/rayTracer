@@ -60,6 +60,8 @@ public:
     Matrix subMatrix2(unsigned int row, unsigned int col);
     float minor3(unsigned int row, unsigned int col);
     float coFactor3(unsigned int row, unsigned int col);
+    bool isInvertible();
+    Matrix inverse();
 };
 
 

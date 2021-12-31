@@ -201,3 +201,65 @@ TEST(MatrixTestSuite, FourByFourDeterminant) {
     EXPECT_TRUE(std::abs(matrixFour.coFactor4(0, 3) - 51) < EPSILON);
     EXPECT_TRUE(std::abs(matrixFour.determinant() - -4071) < EPSILON);
 }
+
+TEST(MatrixTestSuite, MatrixIsInvertible) {
+    std::array<float, 16> matrixFourInvertibleIn = {6.0, 4.0, 4.0, 4.0,
+                                                   5.0, 5.0, 7.0, 6.0,
+                                                   4.0, -9.0, 3.0, -7.0,
+                                                   9.0, 1.0, 7.0, -6.0};
+    std::array<float, 16> matrixFourNonInvertibleIn = {-4.0, 2.0, -2.0, -3.0,
+                                                      9.0, 6.0, 2.0, 6.0,
+                                                      0.0, -5.0, 1.0, -5.0,
+                                                      0.0, 0.0, 0.0, 0.0};
+    Matrix matrixFourInvertible(matrixFourInvertibleIn);
+    Matrix matrixFourNonInvertible(matrixFourNonInvertibleIn);
+    EXPECT_TRUE(matrixFourInvertible.isInvertible());
+    EXPECT_FALSE(matrixFourNonInvertible.isInvertible());
+}
+
+TEST(MatrixTestSuite, InvertMatrix) {
+    std::array<float, 16> matrixFourIn = {-5.0, 2.0, 6.0, -8.0,
+                                         1.0, -5.0, 1.0, 8.0,
+                                         7.0, 7.0, -6.0, -7.0,
+                                         1.0, -3.0, 7.0, 4.0};
+    std::array<float, 16> matrixFourInvertedIn = {0.21805, 0.45113, 0.24060, -0.04511,
+                                                 -0.80827, -1.45677, -0.44361, 0.52068,
+                                                 -0.07895, -0.22368, -0.05263, 0.19737,
+                                                 -0.52256, -0.81391, -0.30075, 0.30639};
+    Matrix matrixFour(matrixFourIn);
+    Matrix resultMatrix = matrixFour.inverse();
+    Matrix matrixFourExpectedInversion(matrixFourInvertedIn);
+    EXPECT_TRUE(std::abs(matrixFour.determinant() - 532) < EPSILON);
+    EXPECT_TRUE(std::abs(matrixFour.coFactor4(2,3) - -160) < EPSILON);
+    EXPECT_TRUE(std::abs(matrixFour.coFactor4(3,2) - 105) < EPSILON);
+    EXPECT_TRUE(matrixFourExpectedInversion == resultMatrix);
+
+    std::array<float, 16> matrixFourInB = {8.0, -5.0, 9.0, 2.0,
+                                           7.0, 5.0, 6.0, 1.0,
+                                           -6.0, 0.0, 9.0, 6.0,
+                                           -3.0, 0.0, -9.0, -4.0};
+    std::array<float, 16> matrixFourInvertedInB = {-0.15385, -0.15385, -0.28205, -0.53846,
+                                                   -0.07692, 0.12308, 0.02564, 0.03077,
+                                                   0.35897, 0.35897, 0.43590, 0.92308,
+                                                   -0.69231, -0.69231, -0.76923, -1.92308};
+    Matrix matrixFourB(matrixFourInB);
+    Matrix resultMatrixB = matrixFourB.inverse();
+    Matrix matrixFourExpectedInversionB(matrixFourInvertedInB);
+    EXPECT_TRUE(matrixFourExpectedInversionB == resultMatrixB);
+
+    std::array<float, 16> matrixFourInC = {9.0, 3.0, 0.0, 9.0,
+                                           -5.0, -2.0, -6.0, -3.0,
+                                           -4.0, 9.0, 6.0, 4.0,
+                                           -7.0, 6.0, 6.0, 2.0};
+    std::array<float, 16> matrixFourInvertedInC = {-0.04074, -0.07778, 0.14444, -0.22222,
+                                                   -0.07778, 0.03333, 0.36667, -0.33333,
+                                                   -0.02901, -0.14630, -0.10926, 0.12963,
+                                                   0.17778, 0.06667, -0.26667, 0.33333};
+    Matrix matrixFourC(matrixFourInC);
+    Matrix resultMatrixC = matrixFourC.inverse();
+    Matrix matrixFourExpectedInversionC(matrixFourInvertedInC);
+    EXPECT_TRUE(matrixFourExpectedInversionC == resultMatrixC);
+}
+
+
+
