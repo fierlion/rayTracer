@@ -261,5 +261,21 @@ TEST(MatrixTestSuite, InvertMatrix) {
     EXPECT_TRUE(matrixFourExpectedInversionC == resultMatrixC);
 }
 
+TEST(MatrixTestSuite, MultiplyMatrixByInverse) {
+    std::array<float, 16> matrixFourInA = {3.0, -9.0, 7.0, 3.0,
+                                          3.0, -8.0, 2.0, -9.0,
+                                          -4.0, 4.0, 4.0, 1.0,
+                                          -6.0, 5.0, -1.0, 1.0};
 
+    std::array<float, 16> matrixFourInB = {8.0, 2.0, 2.0, 2.0,
+                                          3.0, -1.0, 7.0, 0.0,
+                                          7.0, 0.0, 5.0, 4.0,
+                                          6.0, -2.0, 0.0, 5.0};
+    Matrix matrixFourA(matrixFourInA);
+    Matrix matrixFourB(matrixFourInB);
+    Matrix matrixFourC = matrixFourA * matrixFourB;
 
+    Matrix inverseMatrixB = matrixFourB.inverse();
+    Matrix resultMatrix = matrixFourC * inverseMatrixB;
+    EXPECT_TRUE(matrixFourA == resultMatrix);
+}
