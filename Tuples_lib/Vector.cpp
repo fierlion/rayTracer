@@ -3,8 +3,10 @@
 //
 
 //#include "Point.h"
-#include <math.h>
 #include "Vector.h"
+
+#include <math.h>
+
 
 // Adding a Point to a Vector to returns a Point
 //Point Vector::operator+(const Point& rhs) {

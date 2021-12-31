@@ -8,6 +8,7 @@
 #include "Tuple.h"
 #include "Vector.h"
 
+
 class Point : public Tuple {
 public:
     Point(){

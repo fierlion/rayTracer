@@ -3,11 +3,13 @@
 //
 
 #include "gtest/gtest.h"
-#include "../Tuples_lib/Tuple.h"
-#include "../Tuples_lib/Point.h"
-#include "../Tuples_lib/Vector.h"
 #include "../Tuples_lib/Color.h"
+#include "../Tuples_lib/Point.h"
+//#include "../Tuples_lib/Tuple.h"
+//#include "../Tuples_lib/Vector.h"
+
 #include <math.h>
+
 
 TEST(TupleTestSuite, ExamplePointTuple){ // tuple(4.3, -4.2, 3.1, 1.0) is a point
     Tuple pointTuple(4.3, -4.2, 3.1, POINT_FLOAT);
@@ -40,6 +42,15 @@ TEST(TupleTestSuite, EqualPoints){
 
     EXPECT_TRUE(testPointA == testPointB);
     EXPECT_FALSE(testPointB == testPointC);
+}
+
+TEST(TupleTestSuite, EqualColors){
+    Color black(0.0, 0.0, 0.0);
+    Color black2(0.0, 0.0, 0.0);
+    Color red(1.0, 0.0, 0.0);
+
+    EXPECT_TRUE(black == black2);
+    EXPECT_TRUE(black != red);
 }
 
 TEST(TupleTestSuite, ExamplePoint){

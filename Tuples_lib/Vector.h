@@ -6,7 +6,6 @@
 #define TESTING_TEST_VECTOR_H
 
 #include "Tuple.h"
-//#include "Point.h"
 
 class Vector : public Tuple {
 public:

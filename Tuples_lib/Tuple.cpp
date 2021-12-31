@@ -3,12 +3,11 @@
 //
 
 #include "Tuple.h"
-#include "Point.h"
-#include "Vector.h"
 
 #include <cmath>
-#include <iostream>
 #include <exception>
+#include <iostream>
+
 
 class IllegalArithmeticException: public std::exception {
     virtual const char* what() const throw() {
@@ -22,14 +21,18 @@ class ConversionException: public std::exception {
     }
 } convEx;
 
-bool Tuple::operator==(const Tuple& rhs) {
+bool Tuple::operator==(const Tuple& rhs) const {
     return (std::abs(x - rhs.x) < EPSILON &&
             std::abs(y - rhs.y) < EPSILON &&
             std::abs(z - rhs.z) < EPSILON &&
             std::abs(w - rhs.w) < EPSILON);
 }
 
-Tuple Tuple::operator+(const Tuple& rhs) {
+bool Tuple::operator!=(const Tuple& rhs) const {
+    return !(this->operator==(rhs));
+}
+
+Tuple Tuple::operator+(const Tuple& rhs) const {
     if (std::abs(w + rhs.w) > (2.0 - EPSILON)) {
         // Point + Point is illegal
         throw illArithEx;
@@ -42,7 +45,7 @@ Tuple Tuple::operator+(const Tuple& rhs) {
     }
 }
 
-Tuple Tuple::operator-(const Tuple& rhs) {
+Tuple Tuple::operator-(const Tuple& rhs) const {
    if (std::abs(w - rhs.w) < (0.0 - EPSILON)) {
        // Vector - Point is illegal
        throw illArithEx;
@@ -53,23 +56,23 @@ Tuple Tuple::operator-(const Tuple& rhs) {
    }
 }
 
-Tuple Tuple::operator-() {
+Tuple Tuple::operator-() const {
     return Tuple(-x, -y, -z, w);
 }
 
-Tuple Tuple::operator*(const float scalar) {
+Tuple Tuple::operator*(const float scalar) const {
     return Tuple((x*scalar), (y*scalar), (z*scalar), w);
 }
 
-Tuple Tuple::operator/(const float scalar) {
+Tuple Tuple::operator/(const float scalar) const {
     // throw exception if scalar is 0
     return Tuple((x/scalar), (y/scalar), (z/scalar), w);
 }
 
-bool Tuple::isVector() {return std::abs(w - VECTOR_FLOAT) < EPSILON;}
-bool Tuple::isPoint() {return std::abs(w - POINT_FLOAT) < EPSILON;}
+bool Tuple::isVector() const {return std::abs(w - VECTOR_FLOAT) < EPSILON;}
+bool Tuple::isPoint() const {return std::abs(w - POINT_FLOAT) < EPSILON;}
 
-std::string Tuple::toString() {
+std::string Tuple::toString() const {
     return std::string("x: " + std::to_string(x) + " " +
                        "y: " + std::to_string(y) + " " +
                        "z: " + std::to_string(z) + " " +

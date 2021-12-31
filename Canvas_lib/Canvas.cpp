@@ -3,8 +3,10 @@
 //
 
 #include "Canvas.h"
+
 #include <iostream>
 #include <numeric>
+
 
 void Canvas::displayCanvasContents() {
     for(unsigned int h = 0; h < height; h++) {

@@ -8,7 +8,9 @@
 #define PPM_MAX_LINE_CHARS 70
 
 #include "../Tuples_lib/Color.h"
+
 #include <vector>
+
 
 class Canvas {
 public:
@@ -24,7 +26,7 @@ public:
     void displayCanvasContents();
     unsigned int getHeight() {return height;}
     unsigned int getWidth() {return width;}
-    Color getLocationColor(unsigned int x, unsigned int y) {return canvas[x][y];}
+    Color getLocationColor(unsigned int x, unsigned int y) {return canvas[y][x];}
     // Color location is zero-based from the top down
     void setLocationColor(unsigned int x, unsigned int y, Color colorIn);
     std::string canvasToPpm();

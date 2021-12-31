@@ -4,7 +4,9 @@
 
 #include "gtest/gtest.h"
 #include "../Matrix_lib/Matrix.h"
+
 #include <array>
+
 
 TEST(MatrixTestSuite, EmptyFourByFourTestMatrix){
     Matrix testMatrix;

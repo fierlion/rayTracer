@@ -6,7 +6,9 @@
 #define RAYTRACER_COLOR_H
 
 #include "Tuple.h"
+
 #include <iostream>
+
 
 class Color : public Tuple {
 public:
@@ -24,10 +26,12 @@ public:
     float getGreen() const {return y;}
     float getBlue() const {return z;}
 
+    bool operator==(const Color& rhs) const;
+    bool operator!=(const Color& rhs) const;
     Color operator+(const Color& rhs);
     Color operator-(const Color& rhs);
-    Color operator*(const float scalar);
     Color operator*(const Color& rhs);
+    Color operator*(float scalar);
 
     Color hadamardProduct(const Color& rhs);
     std::string toScaledString();

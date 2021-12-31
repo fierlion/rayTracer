@@ -7,8 +7,10 @@
 
 #define EPSILON 0.00001
 
-#include <array>
 #include "../Tuples_lib/Tuple.h"
+
+#include <array>
+
 
 class Matrix {
 protected:

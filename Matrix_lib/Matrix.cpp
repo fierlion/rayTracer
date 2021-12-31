@@ -2,14 +2,19 @@
 // Created by Allan, Ray on 12/29/21.
 //
 
-#include <iostream>
 #include "Matrix.h"
 #include "../Tuples_lib/Tuple.h"
 
+#include <iostream>
+#include <limits>
+
+
 float Matrix::getPosition(unsigned int x, unsigned int y) {
-    // TODO throw out of bounds exception
     if ((x < dimension && y < dimension) && (x >= 0 && y >= 0)) {
         return matrix[x][y];
+    } else {
+        std::cout << "TODO throw out of bounds exception" << std::endl;
+        return std::numeric_limits<float>::min();
     }
 }
 
@@ -42,7 +47,7 @@ bool Matrix::operator!=(const Matrix& rhs) {
 }
 
 Matrix Matrix::operator*(const Matrix& rhs) {
-    std::array<float, 16> resultArray;
+    std::array<float, 16> resultArray = {};
     for(unsigned int r = 0; r < dimension; r++) {
         for (unsigned int c = 0; c < dimension; c++) {
             float result = 0.0;
@@ -56,7 +61,7 @@ Matrix Matrix::operator*(const Matrix& rhs) {
 }
 
 Tuple Matrix::operator*(const Tuple& rhs) {
-    std::array<float, 4> resultArray;
+    std::array<float, 4> resultArray = {};
     for (unsigned int r = 0; r < dimension; r++) {
         float result = 0.0;
         result += matrix[r][0] * rhs.getX();
@@ -77,7 +82,7 @@ Matrix Matrix::identityMatrix() {
 }
 
 Matrix Matrix::transpose() {
-    std::array<float, 16> resultArray;
+    std::array<float, 16> resultArray = {};
     for(unsigned int r = 0; r < dimension; r++) {
         for (unsigned int c = 0; c < dimension; c++) {
             resultArray[(dimension * c) + r] = matrix[r][c];
@@ -88,7 +93,7 @@ Matrix Matrix::transpose() {
 
 
 Matrix Matrix::subMatrix3(unsigned int row, unsigned int col) {
-    std::array<float, 9> resultArray;
+    std::array<float, 9> resultArray = {};
     unsigned int current = 0;
     for(unsigned int r = 0; r < dimension; r++) {
         for (unsigned int c = 0; c < dimension; c++) {
@@ -115,7 +120,7 @@ float Matrix::coFactor4(unsigned int row, unsigned int col) {
 }
 
 Matrix Matrix::subMatrix2(unsigned int row, unsigned int col) {
-    std::array<float, 4> resultArray;
+    std::array<float, 4> resultArray = {};
     unsigned int current = 0;
     for(unsigned int r = 0; r < dimension; r++) {
         for (unsigned int c = 0; c < dimension; c++) {
@@ -158,6 +163,9 @@ float Matrix::determinant() {
             result += matrix[0][i] * this->coFactor4(0, i);
         }
         return result;
+    } else {
+        std::cout << "TODO: throw out of bounds exception" << std::endl;
+        return std::numeric_limits<float>::min();
     }
 }
 
@@ -172,8 +180,8 @@ bool Matrix::isInvertible() {
 
 Matrix Matrix::inverse() {
     if (this->isInvertible()) {
-        std::array<float, 16> coFactorArray;
-        std::array<float, 16> resultArray;
+        std::array<float, 16> coFactorArray = {};
+        std::array<float, 16> resultArray = {};
         for(unsigned int r = 0; r < dimension; r++) {
             for (unsigned int c = 0; c < dimension; c++) {
                 coFactorArray[(dimension * r) + c] = this->coFactor4(r, c);
@@ -191,5 +199,6 @@ Matrix Matrix::inverse() {
         return Matrix(resultArray);
     } else {
         std::cout << "TODO: throw non-invertible Matrix exception" << std::endl;
+        return Matrix();
     }
 }

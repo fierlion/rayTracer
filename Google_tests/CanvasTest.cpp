@@ -4,7 +4,9 @@
 
 #include "gtest/gtest.h"
 #include "../Canvas_lib/Canvas.h"
+
 #include <iostream>
+
 
 TEST(CanvasTestSuite, InitializeCanvas){
     Canvas testCanvas(10, 20);
@@ -15,7 +17,7 @@ TEST(CanvasTestSuite, InitializeCanvas){
     bool allBlack = true;
     for(unsigned int h = 0; h < testCanvas.getHeight(); h++) {
         for (unsigned int w = 0; w < testCanvas.getWidth(); w++) {
-            if (!(testCanvas.getLocationColor(w, h) == black)) {
+            if (testCanvas.getLocationColor(w, h) != black) {
                 allBlack = false;
             }
         }
@@ -27,11 +29,11 @@ TEST(CanvasTestSuite, SetColor) {
     Canvas testCanvas(10, 1);
     Color red(1.0, 0.0, 0.0);
     Color black(0.0, 0.0, 0.0);
-    testCanvas.setLocationColor(0, 5, red);
+    testCanvas.setLocationColor(5, 0, red);
 
-    EXPECT_TRUE(testCanvas.getLocationColor(0,4) == black);
-    EXPECT_TRUE(testCanvas.getLocationColor(0,5) == red);
-    EXPECT_TRUE(testCanvas.getLocationColor(0,6) == black);
+    EXPECT_TRUE(testCanvas.getLocationColor(4,0) == black);
+    EXPECT_TRUE(testCanvas.getLocationColor(5,0) == red);
+    EXPECT_TRUE(testCanvas.getLocationColor(6,0) == black);
 }
 
 TEST(CanvasTestSuite, ToEmptyPPMFileString) {
@@ -59,6 +61,6 @@ TEST(CanvasTestSuite, ToPPMFileString) {
     testCanvas.setLocationColor(1, 0, green);
     testCanvas.setLocationColor(1, 1, blue);
     std::string canvasResult = testCanvas.canvasToPpm();
-    std::string expectedCanvasResult = "P3\n2 2\n255\n0 0 0 255 0 0 0 255 0 0 0 255\n";
+    std::string expectedCanvasResult = "P3\n2 2\n255\n0 0 0 0 255 0 255 0 0 0 0 255\n";
     EXPECT_EQ(expectedCanvasResult, canvasResult);
 }

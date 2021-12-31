@@ -38,16 +38,18 @@ public:
     float getZ() const {return z;}
     float getW() const {return w;}
 
-    bool operator==(const Tuple& rhs);
-    Tuple operator+(const Tuple& rhs);
-    Tuple operator-(const Tuple& rhs);
-    Tuple operator-();
-    Tuple operator*(const float scalar);
-    Tuple operator/(const float scalar);
+    bool operator==(const Tuple& rhs) const;
+    bool operator!=(const Tuple& rhs) const;
+    Tuple operator+(const Tuple& rhs) const;
+    Tuple operator-(const Tuple& rhs) const;
+    Tuple operator-() const;
 
-    bool isPoint();
-    bool isVector();
-    std::string toString();
+    Tuple operator*(const float scalar) const;
+    Tuple operator/(const float scalar) const;
+
+    bool isPoint() const;
+    bool isVector() const;
+    std::string toString() const;
 };
 
 #endif //TESTING_TEST_TUPLE_H

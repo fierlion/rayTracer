@@ -1,5 +1,3 @@
-#include <iostream>
-#include <fstream>
 #include "Tuples_lib/Point.h"
 #include "Tuples_lib/Point.cpp"
 #include "Tuples_lib/Vector.h"
@@ -8,6 +6,9 @@
 #include "Tuples_lib/Color.cpp"
 #include "Canvas_lib/Canvas.h"
 #include "Canvas_lib/Canvas.cpp"
+
+#include <fstream>
+#include <iostream>
 
 class Projectile {
 public:

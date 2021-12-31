@@ -3,8 +3,20 @@
 //
 
 #include "Color.h"
+
 #include <cmath>
 #include <iostream>
+
+
+bool Color::operator==(const Color& rhs) const {
+    return (std::abs(x - rhs.x) < EPSILON &&
+            std::abs(y - rhs.y) < EPSILON &&
+            std::abs(z - rhs.z) < EPSILON);
+}
+
+bool Color::operator!=(const Color& rhs) const {
+    return !(this->operator==(rhs));
+}
 
 // Adding A Vector to a Point returns a Point
 Color Color::operator+(const Color& rhs) {
@@ -15,13 +27,15 @@ Color Color::operator-(const Color& rhs) {
     return Color((x - rhs.getRed()), (y - rhs.getGreen()), (z - rhs.getBlue()));
 }
 
+Color Color::operator*(const Color& rhs) {
+    return Color((x * rhs.getRed()), (y * rhs.getGreen()), (z * rhs.getBlue()));
+}
+
 Color Color::operator*(const float scalar) {
     return Color((x * scalar), (y * scalar), (z * scalar));
 }
 
-Color Color::operator*(const Color& rhs) {
-    return Color((x * rhs.getRed()), (y * rhs.getGreen()), (z * rhs.getBlue()));
-}
+
 
 // this could also be an alias to the unary * operator, `Color::operator*(const Color& rhs)`
 Color Color::hadamardProduct(const Color &rhs) {
