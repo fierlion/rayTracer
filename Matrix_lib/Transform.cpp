@@ -55,3 +55,11 @@ Transform Transform::rotateZ(float radians) {
                                       0.0, 0.0, 0.0, 1.0};
     return Transform(matrixIn, TransformType::RotateZ);
 };
+
+Transform Transform::shear(float xy, float xz, float yx, float yz, float zx, float zy) {
+    std::array<float, 16> matrixIn = {1.0, xy, xz, 0.0,
+                                      yx, 1.0, yz, 0.0,
+                                      zx, zy, 1.0, 0.0,
+                                      0.0, 0.0, 0.0, 1.0};
+    return Transform(matrixIn, TransformType::Shear);
+}

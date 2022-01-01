@@ -11,7 +11,8 @@ enum class TransformType {Translate,
                           Scale,
                           RotateX,
                           RotateY,
-                          RotateZ};
+                          RotateZ,
+                          Shear};
 
 // Transform class is a library of Transformation Matrices
 class Transform : public Matrix {
@@ -27,6 +28,7 @@ public:
     static Transform rotateX(float radians);
     static Transform rotateY(float radians);
     static Transform rotateZ(float radians);
+    static Transform shear(float xy, float xz, float yx, float yz, float zx, float zy);
 };
 
 #endif //GOOGLE_TESTS_TRANSFORM_H

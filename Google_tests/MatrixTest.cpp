@@ -415,3 +415,70 @@ TEST(MatrixTestSuite, RotateZAxisTransform) {
     EXPECT_TRUE(expectedHalfQuarter == resultHalfQuarter);
     EXPECT_TRUE(expectedFullQuarter == resultFullQuarter);
 }
+
+TEST(MatrixTestSuite, ShearingTransformationSimple) {
+    Transform shearingTransformA = Transform::shear(1.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+    Point testPointA = Point(2.0, 3.0, 4.0);
+    Point expectedPointA = Point(5.0, 3.0, 4.0);
+    Point resultPointA = shearingTransformA * testPointA;
+    EXPECT_TRUE(expectedPointA == resultPointA);
+
+    Transform shearingTransformB = Transform::shear(0.0, 1.0, 0.0, 0.0, 0.0, 0.0);
+    Point testPointB = Point(2.0, 3.0, 4.0);
+    Point expectedPointB = Point(6.0, 3.0, 4.0);
+    Point resultPointB = shearingTransformB * testPointB;
+    EXPECT_TRUE(expectedPointB == resultPointB);
+
+    Transform shearingTransformC = Transform::shear(0.0, 0.0, 1.0, 0.0, 0.0, 0.0);
+    Point testPointC = Point(2.0, 3.0, 4.0);
+    Point expectedPointC = Point(2.0, 5.0, 4.0);
+    Point resultPointC = shearingTransformC * testPointC;
+    EXPECT_TRUE(expectedPointC == resultPointC);
+
+    Transform shearingTransformD = Transform::shear(0.0, 0.0, 0.0, 1.0, 0.0, 0.0);
+    Point testPointD = Point(2.0, 3.0, 4.0);
+    Point expectedPointD = Point(2.0, 7.0, 4.0);
+    Point resultPointD = shearingTransformD * testPointD;
+    EXPECT_TRUE(expectedPointD == resultPointD);
+
+    Transform shearingTransformE = Transform::shear(0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    Point testPointE = Point(2.0, 3.0, 4.0);
+    Point expectedPointE = Point(2.0, 3.0, 6.0);
+    Point resultPointE = shearingTransformE * testPointE;
+    EXPECT_TRUE(expectedPointE == resultPointE);
+
+    Transform shearingTransformF = Transform::shear(0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+    Point testPointF = Point(2.0, 3.0, 4.0);
+    Point expectedPointF = Point(2.0, 3.0, 7.0);
+    Point resultPointF = shearingTransformF * testPointF;
+    EXPECT_TRUE(expectedPointF == resultPointF);
+}
+
+TEST(MatrixTestSuite, ChainedTransformations) {
+    double pi = std::atan(1)*4;
+    Point testPoint = Point(1.0, 0.0, 1.0);
+    Transform rotation = Transform::rotateX(pi/2.0);
+    Transform scaling = Transform::scale(5.0, 5.0, 5.0);
+    Transform translation = Transform::translate(10.0, 5.0, 7.0);
+    Point expectedRotationPoint = Point(1.0, -1.0, 0.0);
+    Point resultRotationPoint = rotation * testPoint;
+    EXPECT_TRUE(expectedRotationPoint == resultRotationPoint);
+    Point expectedScalingPoint = Point(5.0, -5.0, 0.0);
+    Point resultScalingPoint = scaling * resultRotationPoint;
+    EXPECT_TRUE(expectedScalingPoint == resultScalingPoint);
+    Point expectedTranslationPoint = Point(15.0, 0.0, 7.0);
+    Point resultTranslationPoint = translation * resultScalingPoint;
+    EXPECT_TRUE(expectedTranslationPoint == resultTranslationPoint);
+}
+
+TEST(MatrixTestSuite, ChainedTransformationsReverseOrder) {
+    double pi = std::atan(1)*4;
+    Point testPoint = Point(1.0, 0.0, 1.0);
+    Transform rotation = Transform::rotateX(pi/2.0);
+    Transform scaling = Transform::scale(5.0, 5.0, 5.0);
+    Transform translation = Transform::translate(10.0, 5.0, 7.0);
+    Matrix aggregateTransform = translation * scaling * rotation;
+    Point expectedPoint = Point(15.0, 0.0, 7.0);
+    Point resultPoint = aggregateTransform * testPoint;
+    EXPECT_TRUE(expectedPoint == resultPoint);
+}
