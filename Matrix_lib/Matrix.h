@@ -8,6 +8,7 @@
 #define EPSILON 0.00001
 
 #include "../Tuples_lib/Tuple.h"
+#include "../Tuples_lib/Point.h"
 
 #include <array>
 
@@ -53,6 +54,8 @@ public:
     bool operator!=(const Matrix& rhs);
     Matrix operator*(const Matrix& rhs);
     Tuple operator*(const Tuple& rhs);
+    Point operator*(const Point& rhs);
+    Vector operator*(const Vector& rhs);
     float determinant();
     static Matrix identityMatrix();
     Matrix transpose();

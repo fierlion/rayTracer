@@ -4,8 +4,12 @@
 
 #include "gtest/gtest.h"
 #include "../Matrix_lib/Matrix.h"
+#include "../Matrix_lib/Transform.h"
+#include "../Tuples_lib/Point.h"
 
 #include <array>
+#include <numeric>
+
 
 
 TEST(MatrixTestSuite, EmptyFourByFourTestMatrix){
@@ -280,4 +284,134 @@ TEST(MatrixTestSuite, MultiplyMatrixByInverse) {
     Matrix inverseMatrixB = matrixFourB.inverse();
     Matrix resultMatrix = matrixFourC * inverseMatrixB;
     EXPECT_TRUE(matrixFourA == resultMatrix);
+};
+
+TEST(MatrixTestSuite, TranslationMatrixPointTransform) {
+    std::array<float, 16> matrixIn = {1.0, 0.0, 0.0, 5.0,
+                                      0.0, 1.0, 0.0, -3.0,
+                                      0.0, 0.0, 1.0, 2.0,
+                                      0.0, 0.0, 0.0, 1.0};
+    Transform translationMatrix = Transform::translate(5.0, -3.0, 2.0);
+    Matrix expectedMatrix(matrixIn);
+    EXPECT_TRUE(expectedMatrix == translationMatrix);
+    Point testPoint(-3.0, 4.0, 5.0);
+    Point expectedPoint(2.0, 1.0, 7.0);
+    Point resultPoint = translationMatrix * testPoint;
+    EXPECT_TRUE(expectedPoint == resultPoint);
+};
+
+TEST(MatrixTestSuite, InverseTranslationPointTransform) {
+    Transform translationMatrix = Transform::translate(5.0, -3.0, 2.0);
+    Matrix inverseTranslation = translationMatrix.inverse();
+    Point testPoint(-3.0, 4.0, 5.0);
+    Point expectedPoint(-8.0, 7.0, 3.0);
+    Point resultPoint = inverseTranslation * testPoint;
+    EXPECT_TRUE(expectedPoint == resultPoint);
+};
+
+TEST(MatrixTestSuite, TranslationMatrixVectorTupleTransform) {
+    Transform translationMatrix = Transform::translate(5.0, -3.0, 2.0);
+    Vector testVector(-3.0, 4.0, 5.0);
+    Vector expectedVector(-3.0, 4.0, 5.0);
+    // test downcast through Tuple type
+    Tuple resultTuple = translationMatrix * static_cast<const Tuple>(testVector);
+    EXPECT_TRUE(expectedVector == resultTuple);
+    EXPECT_TRUE(resultTuple.isVector());
+};
+
+TEST(MatrixTestSuite, TranslationMatrixVectorTransform) {
+    // Vector should not be transformed
+    Transform translationMatrix = Transform::translate(5.0, -3.0, 2.0);
+    Vector testVector(-3.0, 4.0, 5.0);
+    Vector expectedVector(-3.0, 4.0, 5.0);
+    Vector resultVector = translationMatrix * testVector;
+    EXPECT_TRUE(expectedVector == resultVector);
+};
+
+
+TEST(MatrixTestSuite, ScalingMatrixPointTransform) {
+    Transform scalingMatrix = Transform::scale(2.0, 3.0, 4.0);
+    Point testPoint(-4.0, 6.0, 8.0);
+    Point expectedPoint(-8.0, 18.0, 32.0);
+    Point resultPoint = scalingMatrix * testPoint;
+    EXPECT_TRUE(expectedPoint == resultPoint);
+};
+
+TEST(MatrixTestSuite, InverseScalingMatrixVectorTransform) {
+    Transform scalingMatrix = Transform::scale(2.0, 3.0, 4.0);
+    Matrix inverseScaling = scalingMatrix.inverse();
+    Vector testVector(-4.0, 6.0, 8.0);
+    Vector expectedVector(-2.0, 2.0, 2.0);
+    Vector resultVector = inverseScaling * testVector;
+    EXPECT_TRUE(expectedVector == resultVector);
+};
+
+TEST(MatrixTestSuite, ScalingMatrixVectorTransform) {
+    Transform scalingMatrix = Transform::scale(2.0, 3.0, 4.0);
+    Vector testVector(-4.0, 6.0, 8.0);
+    Vector expectedVector(-8.0, 18.0, 32.0);
+    Vector resultVector = scalingMatrix * testVector;
+    EXPECT_TRUE(expectedVector == resultVector);
+};
+
+TEST(MatrixTestSuite, ScalingReflectionTransform) {
+    // reflect across x-axis
+    Transform scalingMatrix = Transform::scale(-1.0, 1.0, 1.0);
+    Point testPoint = Point(2.0, 3.0, 4.0);
+    Point expectedPoint = Point(-2.0, 3.0, 4.0);
+    Point resultPoint = scalingMatrix * testPoint;
+    EXPECT_TRUE(expectedPoint == resultPoint);
+};
+
+TEST(MatrixTestSuite, RotateXAxisTransform) {
+    double pi = std::atan(1)*4;
+    // reflect across x-axis
+    Transform halfQuarter = Transform::rotateX(pi / 4);
+    Transform fullQuarter = Transform::rotateX(pi / 2);
+    Point testPoint = Point(0.0, 1.0, 0.0);
+    Point expectedHalfQuarter = Point(0.0, std::sqrt(2.0)/2.0, std::sqrt(2.0)/2.0);
+    Point expectedFullQuarter = Point(0.0, 0.0, 1.0);
+    Point resultHalfQuarter = halfQuarter * testPoint;
+    Point resultFullQuarter = fullQuarter * testPoint;
+    EXPECT_TRUE(expectedHalfQuarter == resultHalfQuarter);
+    EXPECT_TRUE(expectedFullQuarter == resultFullQuarter);
+};
+
+TEST(MatrixTestSuite, InverseRotateXAxisTransform) {
+    double pi = std::atan(1)*4;
+    // reflect across x-axis
+    Transform halfQuarter = Transform::rotateX(pi / 4);
+    Matrix inverseHalfQuarter = halfQuarter.inverse();
+    Point testPoint = Point(0.0, 1.0, 0.0);
+    Point expectedHalfQuarter = Point(0.0, std::sqrt(2.0)/2.0, -(std::sqrt(2.0)/2.0));
+    Point resultHalfQuarter = inverseHalfQuarter * testPoint;
+    EXPECT_TRUE(expectedHalfQuarter == resultHalfQuarter);
+};
+
+TEST(MatrixTestSuite, RotateYAxisTransform) {
+    double pi = std::atan(1)*4;
+    // reflect across x-axis
+    Transform halfQuarter = Transform::rotateY(pi / 4);
+    Transform fullQuarter = Transform::rotateY(pi / 2);
+    Point testPoint = Point(0.0, 0.0, 1.0);
+    Point expectedHalfQuarter = Point(std::sqrt(2.0)/2.0, 0.0, std::sqrt(2.0)/2.0);
+    Point expectedFullQuarter = Point(1.0, 0.0, 0.0);
+    Point resultHalfQuarter = halfQuarter * testPoint;
+    Point resultFullQuarter = fullQuarter * testPoint;
+    EXPECT_TRUE(expectedHalfQuarter == resultHalfQuarter);
+    EXPECT_TRUE(expectedFullQuarter == resultFullQuarter);
+}
+
+TEST(MatrixTestSuite, RotateZAxisTransform) {
+    double pi = std::atan(1)*4;
+    // reflect across x-axis
+    Transform halfQuarter = Transform::rotateZ(pi / 4);
+    Transform fullQuarter = Transform::rotateZ(pi / 2);
+    Point testPoint = Point(0.0, 1.0, 0.0);
+    Point expectedHalfQuarter = Point(-(std::sqrt(2.0)/2.0), std::sqrt(2.0)/2.0, 0.0);
+    Point expectedFullQuarter = Point(-1.0, 0.0, 0.0);
+    Point resultHalfQuarter = halfQuarter * testPoint;
+    Point resultFullQuarter = fullQuarter * testPoint;
+    EXPECT_TRUE(expectedHalfQuarter == resultHalfQuarter);
+    EXPECT_TRUE(expectedFullQuarter == resultFullQuarter);
 }

@@ -73,6 +73,34 @@ Tuple Matrix::operator*(const Tuple& rhs) {
     return Tuple(resultArray[0], resultArray[1], resultArray[2], resultArray[3]);
 }
 
+// TODO figure out how to call parent (Tuple)*
+Point Matrix::operator*(const Point &rhs) {
+    std::array<float, 3> resultArray = {};
+    for (unsigned int r = 0; r < dimension; r++) {
+        float result = 0.0;
+        result += matrix[r][0] * rhs.getX();
+        result += matrix[r][1] * rhs.getY();
+        result += matrix[r][2] * rhs.getZ();
+        result += matrix[r][3] * rhs.getW();
+        resultArray[r] = result;
+    }
+    return Point(resultArray[0], resultArray[1], resultArray[2]);
+}
+
+// TODO figure out how to call parent (Tuple)*
+Vector Matrix::operator*(const Vector &rhs) {
+    std::array<float, 3> resultArray = {};
+    for (unsigned int r = 0; r < dimension; r++) {
+        float result = 0.0;
+        result += matrix[r][0] * rhs.getX();
+        result += matrix[r][1] * rhs.getY();
+        result += matrix[r][2] * rhs.getZ();
+        result += matrix[r][3] * rhs.getW();
+        resultArray[r] = result;
+    }
+    return Vector(resultArray[0], resultArray[1], resultArray[2]);
+}
+
 Matrix Matrix::identityMatrix() {
     std::array<float, 16> matrixIn = {1.0, 0.0, 0.0, 0.0,
                                       0.0, 1.0, 0.0, 0.0,
