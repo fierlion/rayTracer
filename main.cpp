@@ -10,6 +10,10 @@
 #include "Matrix_lib/Matrix.cpp"
 #include "Matrix_lib/Transform.h"
 #include "Matrix_lib/Transform.cpp"
+#include "Ray_lib/Ray.h"
+#include "Ray_lib/Ray.cpp"
+#include "Sphere_lib/Sphere.h"
+#include "Sphere_lib/Shpere.cpp"
 
 #include <fstream>
 #include <iostream>
