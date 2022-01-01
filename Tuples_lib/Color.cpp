@@ -60,3 +60,8 @@ std::string Color::toScaledString() {
     return (redString + " " + greenString + " " + blueString);
 }
 
+Color Color::red() {return Color(1.0, 0.0, 0.0);}
+Color Color::green() {return Color(0.0, 1.0, 0.0);};
+Color Color::blue() {return Color(0.0, 0.0, 1.0);};
+Color Color::yellow() {return Color(1.0, 1.0, 0.8);};
+Color Color::black() {return Color(0.0, 0.0, 0.0);};

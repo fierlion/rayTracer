@@ -35,6 +35,11 @@ public:
 
     Color hadamardProduct(const Color& rhs);
     std::string toScaledString();
+    static Color red();
+    static Color green();
+    static Color blue();
+    static Color yellow();
+    static Color black();
 };
 
 

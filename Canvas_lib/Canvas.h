@@ -19,8 +19,9 @@ public:
         height = heightIn;
         width = widthIn;
         for (unsigned int i=0; i<heightIn; i++) {
-            // fill with black color (0, 0, 0)
-            canvas.push_back(std::vector<Color>(widthIn, Color(0.0, 0.0, 0.0)));
+            // default to all black canvas
+            Color black = Color::black();
+            canvas.push_back(std::vector<Color>(widthIn, black));
         }
     }
     void displayCanvasContents();

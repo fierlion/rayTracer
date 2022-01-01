@@ -6,6 +6,10 @@
 #include "Tuples_lib/Color.cpp"
 #include "Canvas_lib/Canvas.h"
 #include "Canvas_lib/Canvas.cpp"
+#include "Matrix_lib/Matrix.h"
+#include "Matrix_lib/Matrix.cpp"
+#include "Matrix_lib/Transform.h"
+#include "Matrix_lib/Transform.cpp"
 
 #include <fstream>
 #include <iostream>
@@ -37,36 +41,69 @@ Projectile tick(Environment env, Projectile proj) {
     return Projectile(newPosition, newVelocity);
 }
 
-int main()
-{
-    // projectile starts at a unit above origin
-    Vector normalizedStart = Vector(1.0, 1.8, 0.0).normalize() * 11.25;
-    Projectile mainProjectile = Projectile(Point(0.0, 1.0, 0.0), normalizedStart);
-    Environment mainEnvironment = Environment(Vector(0.0, -0.1, 0.0), Vector(-0.01, 0.0, 0.0));
-    Canvas mainCanvas = Canvas(900, 550);
-    Color red = Color(1.0, 0.0, 0.0);
-    while (mainProjectile.getPoint().getY() > 0.0) {
-        Point thisPoint = mainProjectile.getPoint();
-        std::cout << "x: " << thisPoint.getX() << " y: " << thisPoint.getY() << " z: " << thisPoint.getZ() << std::endl;
-        // cast to int uses floor -- add 0.5 to round to nearest int
-        int canvasX = int(thisPoint.getX() + 0.5);
-        // canvas Y is inverted -- subtract it from canvas height
-        int canvasY = mainCanvas.getHeight() - int(thisPoint.getY() + 0.5);
-        mainCanvas.setLocationColor(canvasX, canvasY, red);
-        mainProjectile = tick(mainEnvironment, mainProjectile);
-    }
-    std::string fileOutput = mainCanvas.canvasToPpm();
+void writePPMToFile(Canvas canvasIn, std::string fileName) {
+    std::string fileOutput = canvasIn.canvasToPpm();
     // write out to file
-    std::string filename("tmp.ppm");
     std::fstream file_out;
-    file_out.open(filename, std::ios_base::out);
+    file_out.open(fileName, std::ios_base::out);
     if (!file_out.is_open()) {
-        std::cout << "failed to open " << filename << '\n';
+        std::cout << "failed to open " << fileName << '\n';
     } else {
         file_out << fileOutput;
         std::cout << "Done Writing!" << std::endl;
     }
+}
+
+int main()
+{
+    // projectile starts at a unit above origin
+    Vector normalizedStart = Vector(1.0, 1.8, 0.0).normalize() * 11.25;
+    Projectile arcProjectile = Projectile(Point(0.0, 1.0, 0.0), normalizedStart);
+    Environment arcEnvironment = Environment(Vector(0.0, -0.1, 0.0), Vector(-0.01, 0.0, 0.0));
+    Canvas arcCanvas = Canvas(900, 550);
+    Color red = Color::red();
+    while (arcProjectile.getPoint().getY() > 0.0) {
+        Point thisPoint = arcProjectile.getPoint();
+        // cast to int uses floor -- add 0.5 to round to the nearest int
+        int canvasX = int(thisPoint.getX() + 0.5);
+        // canvas Y is inverted -- subtract it from canvas height
+        int canvasY = arcCanvas.getHeight() - int(thisPoint.getY() + 0.5);
+        arcCanvas.setLocationColor(canvasX, canvasY, red);
+        arcProjectile = tick(arcEnvironment, arcProjectile);
+    }
+    writePPMToFile(arcCanvas, "arc.ppm");
+
+    // generate clock with transformations
+    Canvas clockCanvas = Canvas(500, 500);
+    double pi = std::atan(1)*4;
+    Color yellow = Color::yellow();
+    Point origin = Point(0.0, 0.0, 0.0);
+    Point noon = Point(0.0, 0.0, 1.0);
+
+    Transform canvasCenter = Transform::translate(clockCanvas.getWidth()/2.0, clockCanvas.getHeight()/2.0, clockCanvas.getHeight()/2.0);
+    Transform clockScale = Transform::scale((500 * 3.0)/8.0, (500 * 3.0)/8.0, (500 * 3.0)/8.0);
+    Point centerPoint = canvasCenter * clockScale * origin;
+
+    int canvasX = int(centerPoint.getX() + 0.5);
+    int canvasY = clockCanvas.getHeight() - int(centerPoint.getZ() + 0.5);
+    clockCanvas.setLocationColor(canvasX, canvasY, yellow);
+
+    Point noonPoint = canvasCenter * clockScale * noon;
+    int noonX = int(noonPoint.getX() + 0.5);
+    int noonY = clockCanvas.getHeight() - int(noonPoint.getZ() + 0.5);
+    std::cout << std::to_string(noonX) << " " << std::to_string(noonY) << std::endl;
+    clockCanvas.setLocationColor(noonX, noonY, yellow);
+
+    for (unsigned int i = 0; i < 12; i++) {
+        Transform rotation = Transform::rotateY(i * pi/6.0);
+        Point thisPoint = canvasCenter * clockScale * rotation * noon;
+        int thisX = int(thisPoint.getX() + 0.5);
+        int thisY = clockCanvas.getHeight() - int(thisPoint.getZ() + 0.5);
+        std::cout << std::to_string(thisX) << " " << std::to_string(thisY) << std::endl;
+        clockCanvas.setLocationColor(thisX, thisY, yellow);
+    }
+
+    writePPMToFile(clockCanvas, "clock.ppm");
 
     return 0;
 }
-

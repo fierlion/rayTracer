@@ -10,7 +10,7 @@
 
 TEST(CanvasTestSuite, InitializeCanvas){
     Canvas testCanvas(10, 20);
-    Color black(0.0, 0.0, 0.0);
+    Color black = Color::black();
     EXPECT_EQ(testCanvas.getHeight(), 20);
     EXPECT_EQ(testCanvas.getWidth(), 10);
 
@@ -27,8 +27,8 @@ TEST(CanvasTestSuite, InitializeCanvas){
 
 TEST(CanvasTestSuite, SetColor) {
     Canvas testCanvas(10, 1);
-    Color red(1.0, 0.0, 0.0);
-    Color black(0.0, 0.0, 0.0);
+    Color red = Color::red();
+    Color black = Color::black();
     testCanvas.setLocationColor(5, 0, red);
 
     EXPECT_TRUE(testCanvas.getLocationColor(4,0) == black);
