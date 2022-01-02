@@ -12,8 +12,12 @@
 #include "Matrix_lib/Transform.cpp"
 #include "Ray_lib/Ray.h"
 #include "Ray_lib/Ray.cpp"
-#include "Sphere_lib/Sphere.h"
-#include "Sphere_lib/Shpere.cpp"
+#include "Object_lib/Shape3D.h"
+#include "Object_lib/Shape3D.cpp"
+#include "Object_lib/Sphere.h"
+#include "Object_lib/Sphere.cpp"
+#include "Intersection_lib/Intersection.h"
+#include "Intersection_lib/Intersection.cpp"
 
 #include <fstream>
 #include <iostream>

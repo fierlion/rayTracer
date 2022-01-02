@@ -45,7 +45,7 @@ Vector Vector::normalize() {
 }
 
 float Vector::dotProduct(const Vector& rhs) {
-    return ((x * rhs.getX())+(y * rhs.getY()) + (z * rhs.getZ()));
+    return ((x * rhs.getX())+(y * rhs.getY())+(z * rhs.getZ()));
 }
 
 Vector Vector::crossProduct(const Vector& rhs) {
