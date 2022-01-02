@@ -20,6 +20,7 @@ public:
     };
     float getTValue() {return this->tValue;}
     Shape getShape() {return this->shape;}
+    static float rayShapeHit(std::vector<Intersection> intersections);
 };
 
 

@@ -3,9 +3,21 @@
 //
 
 #include "Sphere.h"
+#include "Shape.h"
 
 #include <vector>
 #include <numeric>
+
+
+bool Sphere::equals(Shape& rhs) const {
+    Sphere * rhsSphere = dynamic_cast<Sphere*>(&rhs);
+    // NULL check dynamic_cast
+    if (!rhsSphere) {
+        return false;
+    }
+    return (std::abs(this->radius - rhsSphere->radius) < EPSILON &&
+            this->center == rhsSphere->center);
+}
 
 std::vector<float> Sphere::intersect(Ray rayIn) {
     std::vector<float> intersects;

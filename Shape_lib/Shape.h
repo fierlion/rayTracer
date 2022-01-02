@@ -18,10 +18,12 @@ public:
     Shape(Point centerIn) {
         this->center = centerIn;
     }
+    virtual bool equals(Shape& rhs) const;
+    bool operator==(Shape& rhs) const;
     Point getCenter() {return this->center;}
     // base shape has no intersections
     virtual std::vector<float> intersect(Ray rayIn);
-};
 
+};
 
 #endif //GOOGLE_TESTS_SHAPE3D_H

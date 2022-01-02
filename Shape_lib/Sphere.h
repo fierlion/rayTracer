@@ -16,6 +16,7 @@ protected:
     float radius;
 public:
     Sphere() : Shape() {};
+    bool equals(Shape& rhs) const;
     Sphere(Point centerIn, float radiusIn) : Shape(centerIn), radius(radiusIn) {
         radius = radiusIn;
     };
