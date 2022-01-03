@@ -7,6 +7,7 @@
 
 #include "../Shape_lib/Shape.h"
 #include "../Ray_lib/Ray.h"
+#include "../Matrix_lib/Matrix.h"
 
 #include <vector>
 
@@ -15,7 +16,9 @@ class Sphere : public Shape {
 protected:
     float radius;
 public:
-    Sphere() : Shape() {};
+    Sphere() : Shape() {
+        this->transform = Matrix::identityMatrix();
+    };
     bool equals(Shape& rhs) const;
     Sphere(Point centerIn, float radiusIn) : Shape(centerIn), radius(radiusIn) {
         radius = radiusIn;

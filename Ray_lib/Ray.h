@@ -7,6 +7,7 @@
 
 #include "../Tuples_lib/Point.h"
 #include "../Tuples_lib/Vector.h"
+#include "../Matrix_lib/Matrix.h"
 
 class Ray {
 private:
@@ -21,6 +22,7 @@ public:
     Point getOrigin() {return this->origin;}
     Vector getDirection() {return this->direction;}
     Point position(float time);
+    Ray transform(Matrix transformMatrix);
 };
 
 #endif //GOOGLE_TESTS_RAY_H

@@ -7,6 +7,7 @@
 
 
 bool Intersection::operator==(Intersection& rhs) {
+    // TODO check empty intersection
     Shape* rhsShape = rhs.getShape();
     Shape* thisShape = this->getShape();
     return (std::abs(this->tValue - rhs.tValue) < EPSILON &&
@@ -29,12 +30,12 @@ Intersection Intersection::getVisibleHit(std::vector<Intersection> intersections
     } else {
         resultIntersection = intersections[0];
         for (unsigned int i=1; i<intersections.size(); i++) {
-            if (intersections[i].getTValue() < resultIntersection.getTValue()) {
+            if (resultIntersection.getTValue() < 0 || intersections[i].getTValue() < resultIntersection.getTValue()) {
                 resultIntersection = intersections[i];
             }
         }
         if (resultIntersection.getTValue() < 0) {
-            Intersection emptyIntersection;
+            Intersection emptyIntersection = Intersection();
             return emptyIntersection;
         } else {
             return resultIntersection;

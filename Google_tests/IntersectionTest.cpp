@@ -39,7 +39,7 @@ TEST(IntersectionTestSuite, IntersectionEquality) {
     EXPECT_FALSE(testIntersectionA == testIntersectionC);
 }
 
-TEST(IntersectionTestSuite, GetVisibleHits) {
+TEST(IntersectionTestSuite, GetVisibleHitsAllPositive) {
     Sphere testSphere = Sphere();
     Intersection testIntersectionA = Intersection(1.0, &testSphere);
     Intersection testIntersectionB = Intersection(2.0, &testSphere);
@@ -47,5 +47,46 @@ TEST(IntersectionTestSuite, GetVisibleHits) {
     testIntersections.push_back(testIntersectionA);
     testIntersections.push_back(testIntersectionB);
     Intersection resultIntersection = Intersection::getVisibleHit(testIntersections);
-    std::cout << std::to_string(resultIntersection.getTValue()) << std::endl;
+    EXPECT_TRUE(std::abs(resultIntersection.getTValue() - 1.0) < EPSILON);
+    EXPECT_TRUE(resultIntersection.getShape() == &testSphere);
+}
+
+TEST(IntersectionTestSuite, GetVisibleHitsPositiveNegativeMix) {
+    Sphere testSphere = Sphere();
+    Intersection testIntersectionA = Intersection(-1.0, &testSphere);
+    Intersection testIntersectionB = Intersection(1.0, &testSphere);
+    std::vector<Intersection> testIntersections;
+    testIntersections.push_back(testIntersectionA);
+    testIntersections.push_back(testIntersectionB);
+    Intersection resultIntersection = Intersection::getVisibleHit(testIntersections);
+    EXPECT_TRUE(std::abs(resultIntersection.getTValue() - 1.0) < EPSILON);
+    EXPECT_TRUE(resultIntersection.getShape() == &testSphere);
+}
+
+TEST(IntersectionTestSuite, GetVisibleHitsNegativeMix) {
+    Sphere testSphere = Sphere();
+    Intersection testIntersectionA = Intersection(-2.0, &testSphere);
+    Intersection testIntersectionB = Intersection(-1.0, &testSphere);
+    std::vector<Intersection> testIntersections;
+    testIntersections.push_back(testIntersectionA);
+    testIntersections.push_back(testIntersectionB);
+    Intersection resultIntersection = Intersection::getVisibleHit(testIntersections);
+    Intersection emptyIntersection = Intersection();
+    // TODO test emptyIntersection equality
+}
+
+TEST(IntersectionTestSuite, GetVisibleHitsLowestNonNegative) {
+    Sphere testSphere = Sphere();
+    Intersection testIntersectionA = Intersection(5.0, &testSphere);
+    Intersection testIntersectionB = Intersection(7.0, &testSphere);
+    Intersection testIntersectionC = Intersection(-3.0, &testSphere);
+    Intersection testIntersectionD = Intersection(2.0, &testSphere);
+    std::vector<Intersection> testIntersections;
+    testIntersections.push_back(testIntersectionA);
+    testIntersections.push_back(testIntersectionB);
+    testIntersections.push_back(testIntersectionC);
+    testIntersections.push_back(testIntersectionD);
+    Intersection resultIntersection = Intersection::getVisibleHit(testIntersections);
+    EXPECT_TRUE(std::abs(resultIntersection.getTValue() - 2.0) < EPSILON);
+    EXPECT_TRUE(resultIntersection.getShape() == &testSphere);
 }

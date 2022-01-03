@@ -20,10 +20,13 @@ bool Sphere::equals(Shape& rhs) const {
 }
 
 std::vector<float> Sphere::getRayIntersects(Ray& rayIn) {
+    // apply shape transform to ray
+    Matrix inverseTransform = this->getTransform().inverse();
+    Ray rayTr = rayIn.transform(inverseTransform);
     std::vector<float> intersects;
-    Vector sphereToRay = rayIn.getOrigin() - Point(0.0, 0.0, 0.0);
-    float directionDot = rayIn.getDirection().dotProduct(rayIn.getDirection());
-    float directionSphereDot = 2.0 * (rayIn.getDirection().dotProduct(sphereToRay));
+    Vector sphereToRay = rayTr.getOrigin() - Point(0.0, 0.0, 0.0);
+    float directionDot = rayTr.getDirection().dotProduct(rayTr.getDirection());
+    float directionSphereDot = 2.0 * (rayTr.getDirection().dotProduct(sphereToRay));
     float sphereToRayDot = (sphereToRay.dotProduct(sphereToRay)) - 1;
     float discriminant = (directionSphereDot * directionSphereDot) - (4.0 * directionDot * sphereToRayDot);
     if (discriminant < 0) {

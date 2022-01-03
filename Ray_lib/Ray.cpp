@@ -9,3 +9,9 @@ Point Ray::position(float time) {
     // Point + Vector returns a Point
     return this->getOrigin() + (this->getDirection() * time);
 }
+
+Ray Ray::transform(Matrix transformMatrix) {
+    Point transformedOrigin = transformMatrix * this->getOrigin();
+    Vector transformedDirection = transformMatrix * this->getDirection();
+    return Ray(transformedOrigin, transformedDirection);
+}

@@ -6,6 +6,7 @@
 #include "../Shape_lib/Shape.h"
 #include "../Shape_lib/Sphere.h"
 #include "../Ray_lib/Ray.h"
+#include "../Matrix_lib/Transform.h"
 
 #include <vector>
 
@@ -82,4 +83,42 @@ TEST(ShapeTestSuite, SphereEquality) {
     // test parent Shape operator==
     EXPECT_TRUE(testSphere == equalSphere);
     EXPECT_FALSE(testSphere == nonEqualSphere);
+}
+
+TEST(ShapeTestSuite, SphereDefaultTransformation) {
+    Sphere testSphere = Sphere(Point(0.0, 0.0, 0.0), 1.0);
+    Matrix resultTransform = testSphere.getTransform();
+    EXPECT_TRUE(resultTransform == Matrix::identityMatrix());
+}
+
+TEST(ShapeTestSuite, SphereUpdateTransformation) {
+    Sphere testSphere = Sphere(Point(0.0, 0.0, 0.0), 1.0);
+    Matrix translation = Transform::scale(2.0, 3.0, 4.0);
+    testSphere.setTransform(translation);
+    Matrix resultTransform = testSphere.getTransform();
+    EXPECT_TRUE(resultTransform == translation);
+}
+
+TEST(ShapeTestSuite, IntersectScaledSphereWithRay) {
+    Point testOrigin = Point(0.0, 0.0, -5.0);
+    Vector testDirection = Vector(0.0, 0.0, 1.0);
+    Ray testRay = Ray(testOrigin, testDirection);
+    Sphere testSphere = Sphere(Point(0.0, 0.0, 0.0), 1.0);
+    Matrix scaling = Transform::scale(2.0, 2.0, 2.0);
+    testSphere.setTransform(scaling);
+    std::vector<float> resultIntersects = testSphere.getRayIntersects(testRay);
+    EXPECT_EQ(resultIntersects.size(), 2);
+    EXPECT_TRUE(std::abs(resultIntersects[0] - 3.0) < EPSILON);
+    EXPECT_TRUE(std::abs(resultIntersects[1] - 7.0) < EPSILON);
+}
+
+TEST(ShapeTestSuite, IntersectTranslatedSphereWithRay) {
+    Point testOrigin = Point(0.0, 0.0, -5.0);
+    Vector testDirection = Vector(0.0, 0.0, 1.0);
+    Ray testRay = Ray(testOrigin, testDirection);
+    Sphere testSphere = Sphere(Point(0.0, 0.0, 0.0), 1.0);
+    Matrix translation = Transform::translate(5.0, 0.0, 0.0);
+    testSphere.setTransform(translation);
+    std::vector<float> resultIntersects = testSphere.getRayIntersects(testRay);
+    EXPECT_EQ(resultIntersects.size(), 0);
 }
