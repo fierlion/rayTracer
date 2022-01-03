@@ -21,7 +21,7 @@ public:
         radius = radiusIn;
     };
     float getRadius() {return this->radius;}
-    std::vector<float> intersect(Ray rayIn);
+    std::vector<float> getRayIntersects(Ray& rayIn);
 };
 
 

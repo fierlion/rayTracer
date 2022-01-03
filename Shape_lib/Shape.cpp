@@ -10,10 +10,11 @@ bool Shape::operator==(Shape& rhs) const {
     return equals(rhs);
 }
 
-std::vector<float> Shape::intersect(Ray rayIn) {
-    return std::vector<float>();
-}
-
 bool Shape::equals(Shape &rhs) const {
     return false;
 }
+
+std::vector<float> Shape::getRayIntersects(Ray& rayIn) {
+    return std::vector<float>();
+}
+

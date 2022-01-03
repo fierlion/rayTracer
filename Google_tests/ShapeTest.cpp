@@ -16,7 +16,7 @@ TEST(ShapeTestSuite, RayIntersectsSphereTwoPoints){
     Ray testRay = Ray(testOrigin, testDirection);
     // unit sphere
     Sphere testSphere = Sphere(Point(0.0, 0.0, 0.0), 1.0);
-    std::vector<float> resultIntersects = testSphere.intersect(testRay);
+    std::vector<float> resultIntersects = testSphere.getRayIntersects(testRay);
     EXPECT_EQ(resultIntersects.size(), 2);
     EXPECT_TRUE(std::abs(resultIntersects[0] - 4.0) < EPSILON);
     EXPECT_TRUE(std::abs(resultIntersects[1] - 6.0) < EPSILON);
@@ -28,7 +28,7 @@ TEST(ShapeTestSuite, RayIntersectsSphereTangent){
     Ray testRay = Ray(testOrigin, testDirection);
     // unit sphere
     Sphere testSphere = Sphere(Point(0.0, 0.0, 0.0), 1.0);
-    std::vector<float> resultIntersects = testSphere.intersect(testRay);
+    std::vector<float> resultIntersects = testSphere.getRayIntersects(testRay);
     EXPECT_EQ(resultIntersects.size(), 2);
     EXPECT_TRUE(std::abs(resultIntersects[0] - 5.0) < EPSILON);
     EXPECT_TRUE(std::abs(resultIntersects[1] - 5.0) < EPSILON);
@@ -42,7 +42,7 @@ TEST(ShapeTestSuite, RayNoIntersectsSphere){
     Ray testRay = Ray(testOrigin, testDirection);
     // unit sphere
     Sphere testSphere = Sphere(Point(0.0, 0.0, 0.0), 1.0);
-    std::vector<float> resultIntersects = testSphere.intersect(testRay);
+    std::vector<float> resultIntersects = testSphere.getRayIntersects(testRay);
     EXPECT_EQ(resultIntersects.size(), 0);
 }
 
@@ -53,7 +53,7 @@ TEST(ShapeTestSuite, InternalRayIntersectsSphere){
     Ray testRay = Ray(testOrigin, testDirection);
     // unit sphere
     Sphere testSphere = Sphere(Point(0.0, 0.0, 0.0), 1.0);
-    std::vector<float> resultIntersects = testSphere.intersect(testRay);
+    std::vector<float> resultIntersects = testSphere.getRayIntersects(testRay);
     EXPECT_EQ(resultIntersects.size(), 2);
     EXPECT_TRUE(std::abs(resultIntersects[0] - -1.0) < EPSILON);
     EXPECT_TRUE(std::abs(resultIntersects[1] - 1.0) < EPSILON);
@@ -66,7 +66,7 @@ TEST(ShapeTestSuite, SphereBehindRay){
     Ray testRay = Ray(testOrigin, testDirection);
     // unit sphere
     Sphere testSphere = Sphere(Point(0.0, 0.0, 0.0), 1.0);
-    std::vector<float> resultIntersects = testSphere.intersect(testRay);
+    std::vector<float> resultIntersects = testSphere.getRayIntersects(testRay);
     EXPECT_EQ(resultIntersects.size(), 2);
     EXPECT_TRUE(std::abs(resultIntersects[0] - -6.0) < EPSILON);
     EXPECT_TRUE(std::abs(resultIntersects[1] - -4.0) < EPSILON);
@@ -76,6 +76,7 @@ TEST(ShapeTestSuite, SphereEquality) {
     Sphere testSphere = Sphere(Point(0.0, 0.0, 0.0), 1.0);
     Sphere equalSphere = Sphere(Point(0.0, 0.0, 0.0), 1.0);
     Sphere nonEqualSphere = Sphere(Point(1.0, 0.0, 0.0), 1.0);
+
     EXPECT_TRUE( testSphere.equals(equalSphere));
     EXPECT_FALSE(testSphere.equals(nonEqualSphere));
     // test parent Shape operator==

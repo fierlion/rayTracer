@@ -11,16 +11,18 @@
 class Intersection {
 protected:
     float tValue;
-    Shape shape;
+    Shape* shape;
 public:
     Intersection() {};
-    Intersection(float tValueIn, Shape shapeIn) {
+    Intersection(float tValueIn, Shape* shapeIn) {
         tValue = tValueIn;
         shape = shapeIn;
     };
+    bool operator==(Intersection& rhs);
     float getTValue() {return this->tValue;}
-    Shape getShape() {return this->shape;}
-    static float rayShapeHit(std::vector<Intersection> intersections);
+    Shape* getShape() {return this->shape;}
+    static std::vector<Intersection> intersect(Shape& shapeIn, Ray rayIn);
+    static Intersection getVisibleHit(std::vector<Intersection> intersections);
 };
 
 

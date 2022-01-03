@@ -10,7 +10,7 @@
 
 
 bool Sphere::equals(Shape& rhs) const {
-    Sphere * rhsSphere = dynamic_cast<Sphere*>(&rhs);
+    Sphere *rhsSphere = dynamic_cast<Sphere*>(&rhs);
     // NULL check dynamic_cast
     if (!rhsSphere) {
         return false;
@@ -19,7 +19,7 @@ bool Sphere::equals(Shape& rhs) const {
             this->center == rhsSphere->center);
 }
 
-std::vector<float> Sphere::intersect(Ray rayIn) {
+std::vector<float> Sphere::getRayIntersects(Ray& rayIn) {
     std::vector<float> intersects;
     Vector sphereToRay = rayIn.getOrigin() - Point(0.0, 0.0, 0.0);
     float directionDot = rayIn.getDirection().dotProduct(rayIn.getDirection());
