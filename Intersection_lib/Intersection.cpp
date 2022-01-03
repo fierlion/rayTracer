@@ -5,6 +5,8 @@
 #include "Intersection.h"
 #include "../Shape_lib/Sphere.h"
 
+#include <limits>
+
 
 bool Intersection::operator==(Intersection& rhs) {
     // TODO check empty intersection
@@ -26,7 +28,9 @@ std::vector<Intersection> Intersection::intersect(Shape& shapeIn, Ray rayIn) {
 Intersection Intersection::getVisibleHit(std::vector<Intersection> intersections) {
     Intersection resultIntersection;
     if (intersections.size() < 1) {
-        return resultIntersection;
+        Sphere emptySphere = Sphere();
+        Intersection emptyIntersection = Intersection(std::numeric_limits<float>::min(), &emptySphere);
+        return emptyIntersection;
     } else {
         resultIntersection = intersections[0];
         for (unsigned int i=1; i<intersections.size(); i++) {
@@ -35,7 +39,8 @@ Intersection Intersection::getVisibleHit(std::vector<Intersection> intersections
             }
         }
         if (resultIntersection.getTValue() < 0) {
-            Intersection emptyIntersection = Intersection();
+            Sphere emptySphere = Sphere();
+            Intersection emptyIntersection = Intersection(std::numeric_limits<float>::min(), &emptySphere);
             return emptyIntersection;
         } else {
             return resultIntersection;

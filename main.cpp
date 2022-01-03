@@ -1,3 +1,5 @@
+#include "Tuples_lib/Tuple.h"
+#include "Tuples_lib/Tuple.cpp"
 #include "Tuples_lib/Point.h"
 #include "Tuples_lib/Point.cpp"
 #include "Tuples_lib/Vector.h"
@@ -12,10 +14,10 @@
 #include "Matrix_lib/Transform.cpp"
 #include "Ray_lib/Ray.h"
 #include "Ray_lib/Ray.cpp"
-#include "Object_lib/Shape3D.h"
-#include "Object_lib/Shape3D.cpp"
-#include "Object_lib/Sphere.h"
-#include "Object_lib/Sphere.cpp"
+#include "Shape_lib/Shape.h"
+#include "Shape_lib/Shape.cpp"
+#include "Shape_lib/Sphere.h"
+#include "Shape_lib/Sphere.cpp"
 #include "Intersection_lib/Intersection.h"
 #include "Intersection_lib/Intersection.cpp"
 
@@ -112,6 +114,35 @@ int main()
     }
 
     writePPMToFile(clockCanvas, "clock.ppm");
+
+    // generate ray-traced shadow
+    Point rayOrigin = Point(0.0, 0.0, -5.0);
+    float wallZ = 10.0;
+    float wallSize = 7.0;
+    float canvasPixels = 1000.0;
+    float pixelSize = wallSize / canvasPixels;
+    float halfWall = wallSize / 2.0;
+    Canvas shadowCanvas = Canvas(canvasPixels, canvasPixels, Color::blue());
+    Sphere unitSphere = Sphere(Point(0.0, 0.0, 0.0), 10.0);
+    Transform translation = Transform::translate(2.25, 0.0, 0.0);
+    Transform scale = Transform::scale(0.5, 0.5, 0.5);
+    unitSphere.setTransform(translation * scale);
+    for (unsigned int y = 0; y < canvasPixels; y++) {
+        float worldY = halfWall - pixelSize * y;
+        for (unsigned int x = 0; x < canvasPixels; x++) {
+            float worldX = halfWall + pixelSize * x;
+            Point currentPosition = Point(worldX, worldY, wallZ);
+            Vector rayVector = currentPosition - rayOrigin;
+            Vector normalizedVector = rayVector.normalize();
+            Ray currentRay = Ray(rayOrigin, normalizedVector);
+            std::vector<Intersection> resultIntersections = Intersection::intersect(unitSphere, currentRay);
+            Intersection hitIntersection = Intersection::getVisibleHit(resultIntersections);
+            if (hitIntersection.getTValue() != std::numeric_limits<float>::min()) {
+                shadowCanvas.setLocationColor(x, y, Color::black());
+            }
+        }
+    }
+    writePPMToFile(shadowCanvas, "shadow.ppm");
 
     return 0;
 }

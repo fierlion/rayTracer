@@ -71,8 +71,8 @@ TEST(IntersectionTestSuite, GetVisibleHitsNegativeMix) {
     testIntersections.push_back(testIntersectionA);
     testIntersections.push_back(testIntersectionB);
     Intersection resultIntersection = Intersection::getVisibleHit(testIntersections);
-    Intersection emptyIntersection = Intersection();
-    // TODO test emptyIntersection equality
+    EXPECT_TRUE(resultIntersection.getTValue() == std::numeric_limits<float>::min());
+
 }
 
 TEST(IntersectionTestSuite, GetVisibleHitsLowestNonNegative) {
