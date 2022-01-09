@@ -5,7 +5,7 @@
 #ifndef RAYTRACER_MATRIX_H
 #define RAYTRACER_MATRIX_H
 
-#define EPSILON 0.00001
+#define EPSILON 0.0001
 
 #include "../Tuples_lib/Tuple.h"
 #include "../Tuples_lib/Point.h"

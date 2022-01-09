@@ -3,4 +3,4 @@ project(Matrix)
 set(HEADER_FILES Matrix.h Transform.h)
 set(SOURCE_FILES Matrix.cpp Transform.cpp)
 
-add_library(Matrix_lib STATIC ${SOURCE_FILES} ${HEADER_FILES})
+add_library(Matrix STATIC ${SOURCE_FILES} ${HEADER_FILES})

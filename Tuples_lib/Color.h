@@ -13,6 +13,9 @@
 class Color : public Tuple {
 public:
     Color(){
+        x = 0.0;
+        y = 0.0;
+        z = 0.0;
         w = COLOR_FLOAT;
     };
     Color(float red, float green, float blue) {

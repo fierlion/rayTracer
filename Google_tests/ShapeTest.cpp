@@ -100,6 +100,23 @@ TEST(ShapeTestSuite, SphereUpdateTransformation) {
     EXPECT_TRUE(resultTransform == translation);
 }
 
+TEST(ShapeTestSuite, SphereDefaultMaterial) {
+    Sphere testSphere = Sphere();
+    Material expectedMaterial = Material();
+    Material resultMaterial = testSphere.getMaterial();
+    EXPECT_TRUE(expectedMaterial == resultMaterial);
+}
+
+TEST(ShapeTestSuite, SphereUpdateMaterial) {
+    Sphere testSphere = Sphere();
+    Material testMaterial = Material();
+    testMaterial.setAmbient(1.0);
+    testSphere.setMaterial(testMaterial);
+    Material resultMaterial = testSphere.getMaterial();
+    EXPECT_TRUE(testMaterial == resultMaterial);
+    EXPECT_TRUE(abs(resultMaterial.getAmbient() - 1.0) < EPSILON);
+}
+
 TEST(ShapeTestSuite, IntersectScaledSphereWithRay) {
     Point testOrigin = Point(0.0, 0.0, -5.0);
     Vector testDirection = Vector(0.0, 0.0, 1.0);

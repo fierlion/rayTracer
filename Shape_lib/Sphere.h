@@ -17,12 +17,14 @@ protected:
     float radius;
 public:
     Sphere() : Shape() {
+        this->center = Point(0.0, 0.0, 0.0);
+        this->radius = 1.0;
         this->transform = Matrix::identityMatrix();
     };
-    bool equals(Shape& rhs) const;
     Sphere(Point centerIn, float radiusIn) : Shape(centerIn), radius(radiusIn) {
         radius = radiusIn;
     };
+    bool equals(Shape& rhs) const;
     float getRadius() {return this->radius;}
     std::vector<float> getRayIntersects(Ray& rayIn);
     Vector normalAt(Point pointIn);
