@@ -3,7 +3,7 @@
 //
 
 #include "gtest/gtest.h"
-#include "../Intersection_lib/Intersection.h"
+#include "../Intersection/Intersection.h"
 #include "../Shape_lib/Shape.h"
 #include "../Shape_lib/Sphere.h"
 

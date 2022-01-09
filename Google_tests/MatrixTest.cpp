@@ -3,8 +3,8 @@
 //
 
 #include "gtest/gtest.h"
-#include "../Matrix_lib/Matrix.h"
-#include "../Matrix_lib/Transform.h"
+#include "../Matrix/Matrix.h"
+#include "../Matrix/Transform.h"
 #include "../Tuples_lib/Point.h"
 
 #include <array>

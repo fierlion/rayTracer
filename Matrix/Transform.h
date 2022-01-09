@@ -5,7 +5,7 @@
 #ifndef GOOGLE_TESTS_TRANSFORM_H
 #define GOOGLE_TESTS_TRANSFORM_H
 
-#include "../Matrix_lib/Matrix.h"
+#include "../Matrix/Matrix.h"
 
 enum class TransformType {Translate,
                           Scale,

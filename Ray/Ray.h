@@ -7,7 +7,7 @@
 
 #include "../Tuples_lib/Point.h"
 #include "../Tuples_lib/Vector.h"
-#include "../Matrix_lib/Matrix.h"
+#include "../Matrix/Matrix.h"
 
 class Ray {
 private:

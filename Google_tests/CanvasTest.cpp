@@ -3,7 +3,7 @@
 //
 
 #include "gtest/gtest.h"
-#include "../Canvas_lib/Canvas.h"
+#include "../Canvas/Canvas.h"
 
 #include <iostream>
 

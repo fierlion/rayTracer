@@ -3,8 +3,8 @@
 //
 
 #include "gtest/gtest.h"
-#include "../Ray_lib/Ray.h"
-#include "../Matrix_lib/Transform.h"
+#include "../Ray/Ray.h"
+#include "../Matrix/Transform.h"
 
 
 TEST(RayTestSuite, ExampleRay){

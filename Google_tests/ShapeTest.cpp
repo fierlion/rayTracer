@@ -5,8 +5,8 @@
 #include "gtest/gtest.h"
 #include "../Shape_lib/Shape.h"
 #include "../Shape_lib/Sphere.h"
-#include "../Ray_lib/Ray.h"
-#include "../Matrix_lib/Transform.h"
+#include "../Ray/Ray.h"
+#include "../Matrix/Transform.h"
 
 #include <vector>
 #include <math.h>

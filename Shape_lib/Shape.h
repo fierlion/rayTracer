@@ -5,8 +5,8 @@
 #ifndef GOOGLE_TESTS_SHAPE3D_H
 #define GOOGLE_TESTS_SHAPE3D_H
 
-#include "../Ray_lib/Ray.h"
-#include "../Matrix_lib/Matrix.h"
+#include "../Ray/Ray.h"
+#include "../Matrix/Matrix.h"
 
 #include <vector>
 

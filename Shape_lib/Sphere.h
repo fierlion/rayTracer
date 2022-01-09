@@ -6,8 +6,8 @@
 #define GOOGLE_TESTS_SPHERE_H
 
 #include "../Shape_lib/Shape.h"
-#include "../Ray_lib/Ray.h"
-#include "../Matrix_lib/Matrix.h"
+#include "../Ray/Ray.h"
+#include "../Matrix/Matrix.h"
 
 #include <vector>
 

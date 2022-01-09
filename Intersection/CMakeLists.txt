@@ -3,4 +3,4 @@ project(Intersection_lib)
 set(HEADER_FILES Intersection.h)
 set(SOURCE_FILES Intersection.cpp)
 
-add_library(Intersection_lib STATIC ${SOURCE_FILES} ${HEADER_FILES})
+add_library(Intersection STATIC ${SOURCE_FILES} ${HEADER_FILES})
