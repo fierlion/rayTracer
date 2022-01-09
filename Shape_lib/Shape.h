@@ -30,6 +30,7 @@ public:
     void setTransform(Matrix transformIn) {this->transform = transformIn;}
     // base shape has no intersections
     virtual std::vector<float> getRayIntersects(Ray& rayIn);
+    Vector normalAt(Point pointIn);
 };
 
 #endif //GOOGLE_TESTS_SHAPE3D_H

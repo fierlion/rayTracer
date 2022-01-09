@@ -25,6 +25,7 @@ public:
     };
     float getRadius() {return this->radius;}
     std::vector<float> getRayIntersects(Ray& rayIn);
+    Vector normalAt(Point pointIn);
 };
 
 

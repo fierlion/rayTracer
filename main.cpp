@@ -119,11 +119,11 @@ int main()
     Point rayOrigin = Point(0.0, 0.0, -5.0);
     float wallZ = 10.0;
     float wallSize = 7.0;
-    float canvasPixels = 1000.0;
+    float canvasPixels = 500.0;
     float pixelSize = wallSize / canvasPixels;
     float halfWall = wallSize / 2.0;
     Canvas shadowCanvas = Canvas(canvasPixels, canvasPixels, Color::blue());
-    Sphere unitSphere = Sphere(Point(0.0, 0.0, 0.0), 10.0);
+    Sphere unitSphere = Sphere(Point(0.0, 0.0, 0.0), 1.0);
     Transform translation = Transform::translate(2.25, 0.0, 0.0);
     Transform scale = Transform::scale(0.5, 0.5, 0.5);
     unitSphere.setTransform(translation * scale);

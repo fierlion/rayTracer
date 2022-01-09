@@ -168,6 +168,24 @@ TEST(TupleTestSuite, VectorVectorSubtraction){
     EXPECT_FALSE(expectedVector == falseResultVector);
 }
 
+TEST(TupleTestSuite, VectorReflection){
+    Vector testVector(1.0, -1.0, 0.0);
+    Vector normalVector(0.0, 1.0, 0.0);
+    Vector expectedVector(1.0, 1.0, 0.0);
+    Vector resultVector = testVector.reflect(normalVector);
+
+    EXPECT_TRUE(expectedVector == resultVector);
+}
+
+TEST(TupleTestSuite, VectorSlantReflection){
+    Vector testVector(0.0, -1.0, 0.0);
+    Vector normalVector(sqrt(2.0)/2.0, sqrt(2.0)/2.0, 0.0);
+    Vector expectedVector(1.0, 0.0, 0.0);
+    Vector resultVector = testVector.reflect(normalVector);
+
+    EXPECT_TRUE(expectedVector == resultVector);
+}
+
 TEST(TupleTestSuite, Negation){
     Point testPoint(1.0, 1.0, 1.0);
     Vector testVector(1.0, 1.0, 1.0);

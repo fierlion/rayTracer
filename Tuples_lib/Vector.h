@@ -29,7 +29,8 @@ public:
     float magnitude();
     Vector normalize();
     float dotProduct(const Vector& rhs);
-    Vector crossProduct(const Vector&rhs);
+    Vector crossProduct(const Vector& rhs);
+    Vector reflect(Vector& normalVector);
 };
 
 #endif //TESTING_TEST_VECTOR_H

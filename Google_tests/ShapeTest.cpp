@@ -9,6 +9,7 @@
 #include "../Matrix_lib/Transform.h"
 
 #include <vector>
+#include <math.h>
 
 
 TEST(ShapeTestSuite, RayIntersectsSphereTwoPoints){
@@ -121,4 +122,58 @@ TEST(ShapeTestSuite, IntersectTranslatedSphereWithRay) {
     testSphere.setTransform(translation);
     std::vector<float> resultIntersects = testSphere.getRayIntersects(testRay);
     EXPECT_EQ(resultIntersects.size(), 0);
+}
+
+TEST(ShapeTestSuite, SphereNormalAtXAxisPoint) {
+    Sphere testSphere = Sphere(Point(0.0, 0.0, 0.0), 1.0);
+    Vector expectedVector = Vector(1.0, 0.0, 0.0);
+    Vector resultVector = testSphere.normalAt(Point(1.0, 0.0, 0.0));
+    EXPECT_TRUE(expectedVector == resultVector);
+}
+
+TEST(ShapeTestSuite, SphereNormalAtYAxisPoint) {
+    Sphere testSphere = Sphere(Point(0.0, 0.0, 0.0), 1.0);
+    Vector expectedVector = Vector(0.0, 1.0, 0.0);
+    Vector resultVector = testSphere.normalAt(Point(0.0, 1.0, 0.0));
+    EXPECT_TRUE(expectedVector == resultVector);
+}
+
+TEST(ShapeTestSuite, SphereNormalAtZAxisPoint) {
+    Sphere testSphere = Sphere(Point(0.0, 0.0, 0.0), 1.0);
+    Vector expectedVector = Vector(0.0, 0.0, 1.0);
+    Vector resultVector = testSphere.normalAt(Point(0.0, 0.0, 1.0));
+    EXPECT_TRUE(expectedVector == resultVector);
+}
+
+TEST(ShapeTestSuite, SphereNormalAtNonAxisPoint) {
+    Sphere testSphere = Sphere(Point(0.0, 0.0, 0.0), 1.0);
+    float sqrtThreeByThree = sqrt(3.0) / 3.0;
+    Vector expectedVector = Vector(sqrtThreeByThree, sqrtThreeByThree, sqrtThreeByThree);
+    Vector resultVector = testSphere.normalAt(Point(sqrtThreeByThree, sqrtThreeByThree, sqrtThreeByThree));
+    EXPECT_TRUE(expectedVector == resultVector);
+}
+
+TEST(ShapeTestSuite, NormalIsNormalizedVector) {
+    Sphere testSphere = Sphere(Point(0.0, 0.0, 0.0), 1.0);
+    float sqrtThreeByThree = sqrt(3.0) / 3.0;
+    Vector resultVector = testSphere.normalAt(Point(sqrtThreeByThree, sqrtThreeByThree, sqrtThreeByThree));
+    EXPECT_TRUE(resultVector.normalize() == resultVector);
+}
+
+TEST(ShapeTestSuite, NormalOnTranslatedSphere) {
+    Sphere testSphere = Sphere(Point(0.0, 0.0, 0.0), 1.0);
+    Transform translation = Transform::translate(0.0, 1.0, 0.0);
+    testSphere.setTransform(translation);
+    Vector expectedVector = Vector(0.0, 0.70711, -0.70711);
+    Vector resultVector = testSphere.normalAt(Point(0.0, 1.70711, -0.70711));
+    EXPECT_TRUE(expectedVector == resultVector);
+}
+
+TEST(ShapeTestSuite, NormalOnTransrofmedSphere) {
+    Sphere testSphere = Sphere(Point(0.0, 0.0, 0.0), 1.0);
+    Transform scaling = Transform::scale(1.0, 0.5, 1.0);
+    testSphere.setTransform(scaling);
+    Vector expectedVector = Vector(0.0, 0.97014, -0.24254);
+    Vector resultVector = testSphere.normalAt(Point(0.0, sqrt(2.0)/2, -(sqrt(2)/2)));
+    EXPECT_TRUE(expectedVector == resultVector);
 }

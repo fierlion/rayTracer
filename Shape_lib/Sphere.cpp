@@ -24,7 +24,7 @@ std::vector<float> Sphere::getRayIntersects(Ray& rayIn) {
     Matrix inverseTransform = this->getTransform().inverse();
     Ray rayTr = rayIn.transform(inverseTransform);
     std::vector<float> intersects;
-    Vector sphereToRay = rayTr.getOrigin() - Point(0.0, 0.0, 0.0);
+    Vector sphereToRay = rayTr.getOrigin() - this->getCenter();
     float directionDot = rayTr.getDirection().dotProduct(rayTr.getDirection());
     float directionSphereDot = 2.0 * (rayTr.getDirection().dotProduct(sphereToRay));
     float sphereToRayDot = (sphereToRay.dotProduct(sphereToRay)) - 1;
@@ -38,4 +38,11 @@ std::vector<float> Sphere::getRayIntersects(Ray& rayIn) {
         intersects.push_back(t2);
         return intersects;
     }
+}
+
+Vector Sphere::normalAt(Point pointIn) {
+    Point objectPoint = this->getTransform().inverse() * pointIn;
+    Vector objectNormal = objectPoint - this->getCenter();
+    Vector worldNormal = this->getTransform().inverse().transpose() * objectNormal;
+    return worldNormal.normalize();
 }

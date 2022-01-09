@@ -53,3 +53,8 @@ Vector Vector::crossProduct(const Vector& rhs) {
                   (z * rhs.getX()) - (x * rhs.getZ()),
                   (x * rhs.getY()) - (y * rhs.getX()));
 }
+
+Vector Vector::reflect(Vector& normalVector) {
+    float reflectFloat = this->dotProduct(normalVector) * 2.0;
+    return this->operator-(normalVector * reflectFloat);
+}
