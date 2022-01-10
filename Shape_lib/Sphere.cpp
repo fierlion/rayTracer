@@ -3,7 +3,7 @@
 //
 
 #include "Sphere.h"
-#include "Shape.h"
+#include "../Shape_lib/Shape.h"
 
 #include <vector>
 #include <numeric>
@@ -41,6 +41,7 @@ std::vector<float> Sphere::getRayIntersects(Ray& rayIn) {
 }
 
 Vector Sphere::normalAt(Point pointIn) {
+    std::cout << "called sphere normalAt" << std::endl;
     Point objectPoint = this->getTransform().inverse() * pointIn;
     Vector objectNormal = objectPoint - this->getCenter();
     Vector worldNormal = this->getTransform().inverse().transpose() * objectNormal;

@@ -20,6 +20,8 @@
 #include "Shape_lib/Sphere.cpp"
 #include "Intersection/Intersection.h"
 #include "Intersection/Intersection.cpp"
+#include "Material_lib/Material.h"
+#include "Material_lib/Material.cpp"
 
 #include <fstream>
 #include <iostream>
@@ -143,6 +145,40 @@ int main()
         }
     }
     writePPMToFile(shadowCanvas, "shadow.ppm");
+
+    // generate sphere with lighting
+    Sphere testSphere = Sphere();
+    Material testMaterial = Material();
+    testMaterial.setMaterialColor(Color(1.0, 0.2, 1.0));
+    testSphere.setMaterial(testMaterial);
+
+    Point lightPos = Point(-10.0, 10.0, -10.0);
+    Color lightColor = Color(1.0, 1.0, 1.0);
+    Light testLight = Light(lightPos, lightColor);
+
+    Canvas sphereCanvas = Canvas(canvasPixels, canvasPixels, Color::black());
+    //Transform sheared = Transform::shear(1.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+    testSphere.setTransform(translation * scale);
+    for (unsigned int y = 0; y < canvasPixels; y++) {
+        float worldY = halfWall - pixelSize * y;
+        for (unsigned int x = 0; x < canvasPixels; x++) {
+            float worldX = halfWall + pixelSize * x;
+            Point currentPosition = Point(worldX, worldY, wallZ);
+            Vector rayVector = currentPosition - rayOrigin;
+            Vector normalizedVector = rayVector.normalize();
+            Ray currentRay = Ray(rayOrigin, normalizedVector);
+            std::vector<Intersection> resultIntersections = Intersection::intersect(testSphere, currentRay);
+            Intersection hitIntersection = Intersection::getVisibleHit(resultIntersections);
+            Point thisPosition = currentRay.position(hitIntersection.getTValue());
+            Vector thisNormal = hitIntersection.getShape()->normalAt(thisPosition);
+            Vector eyeVector = currentRay.getDirection();
+            if (hitIntersection.getTValue() != std::numeric_limits<float>::min()) {
+                Color thisColor = testSphere.getMaterial().lighting(testLight, thisPosition, eyeVector, thisNormal);
+                sphereCanvas.setLocationColor(x, y, thisColor);
+            }
+        }
+    }
+    writePPMToFile(sphereCanvas, "sphere.ppm");
 
     return 0;
 }

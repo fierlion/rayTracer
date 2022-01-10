@@ -207,9 +207,9 @@ bool Matrix::isInvertible() {
 }
 
 Matrix Matrix::inverse() {
+    std::array<float, 16> coFactorArray = {};
+    std::array<float, 16> resultArray = {};
     if (this->isInvertible()) {
-        std::array<float, 16> coFactorArray = {};
-        std::array<float, 16> resultArray = {};
         for(unsigned int r = 0; r < dimension; r++) {
             for (unsigned int c = 0; c < dimension; c++) {
                 coFactorArray[(dimension * r) + c] = this->coFactor4(r, c);
@@ -227,6 +227,7 @@ Matrix Matrix::inverse() {
         return Matrix(resultArray);
     } else {
         std::cout << "TODO: throw non-invertible Matrix exception" << std::endl;
+        //this->displayMatrixContents();
         return Matrix();
     }
 }

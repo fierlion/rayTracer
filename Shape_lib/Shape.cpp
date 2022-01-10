@@ -10,6 +10,14 @@ bool Shape::operator==(Shape& rhs) const {
     return equals(rhs);
 }
 
+Vector Shape::normalAt(Point pointIn) {
+    std::cout << "called base normalAt" << std::endl;
+    Point objectPoint = this->getTransform().inverse() * pointIn;
+    Vector objectNormal = objectPoint - this->getCenter();
+    Vector worldNormal = this->getTransform().inverse().transpose() * objectNormal;
+    return worldNormal.normalize();
+}
+
 bool Shape::equals(Shape &rhs) const {
     return false;
 }
