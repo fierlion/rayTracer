@@ -16,24 +16,27 @@ bool Material::operator==(Material& rhs) {
 
 Color Material::lighting(Light lightIn, Point positionIn, Vector eyeVector, Vector normalVector) {
     Color effectiveColor = this->getMaterialColor() * lightIn.getIntensity();
-    Vector lightVector = (lightIn.getPosition() - positionIn).normalize();
+    Vector lightVector = lightIn.getPosition() - positionIn;
+    Vector normalizedLightVector = lightVector.normalize();
     Color ambientColor = effectiveColor * this->getAmbient();
     Color specularColor = Color();
     Color diffuseColor = Color();
-    float lightDotNormal = lightVector.dotProduct(normalVector);
+    float lightDotNormal = normalizedLightVector.dotProduct(normalVector);
     if (lightDotNormal < 0.0) {
         diffuseColor = Color::black();
         specularColor = Color::black();
     } else {
         diffuseColor = effectiveColor * this->getDiffuse() * lightDotNormal;
-        Vector reflectVector = -(lightVector.reflect(normalVector));
+        Vector negativeLightVector = -normalizedLightVector;
+        Vector reflectVector = negativeLightVector.reflect(normalVector);
         float reflectDotEye = reflectVector.dotProduct(eyeVector);
-        if (reflectDotEye <= 0.0) {
-            specularColor = Color::black();
-        } else {
+        //TODO there's a bug here that's messing with the reflection
+        //if (reflectDotEye <= 0.0) {
+        //    specularColor = Color::black();
+        //} else {
             float factor = pow(reflectDotEye, this->getShininess());
-            specularColor = (lightIn.getIntensity() * this->getSpecular()) * factor;
-        }
+            specularColor = lightIn.getIntensity() * this->getSpecular() * factor;
+        //}
     }
     std::cout << "final diffuseColor: " << diffuseColor.toString() << std::endl;
     return ambientColor + specularColor + diffuseColor;

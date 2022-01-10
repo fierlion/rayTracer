@@ -150,6 +150,7 @@ int main()
     Sphere testSphere = Sphere();
     Material testMaterial = Material();
     testMaterial.setMaterialColor(Color(1.0, 0.2, 1.0));
+    //testMaterial.setShininess(100.0);
     testSphere.setMaterial(testMaterial);
 
     Point lightPos = Point(-10.0, 10.0, -10.0);
